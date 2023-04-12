@@ -10,7 +10,7 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Toplist {
+model Leaderboar {
     id       String @id @default(cuid())
     username String @unique
     score    Int
