@@ -12,6 +12,6 @@ datasource db {
 
 model Toplist {
     id       String @id @default(cuid())
-    username String
+    username String @unique
     score    Int
 }
