@@ -2,8 +2,8 @@ import Image from "next/image";
 
 const StartNewGame = () => {
   return (
-    <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center backdrop-blur-md">
-      <div className="relative flex h-3/4 w-3/4 flex-col items-center rounded-xl bg-red-900">
+    <div className="flex h-screen w-screen items-center justify-center backdrop-blur-sm">
+      <div className="flex h-4/5 w-3/4 flex-col items-center rounded-xl bg-red-900 p-1">
         <Image
           src="/timberman_logo.png"
           alt="Timberman"
