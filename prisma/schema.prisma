@@ -10,8 +10,8 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Leaderboar {
+model Scoreboard {
     id       String @id @default(cuid())
-    username String @unique
+    username String
     score    Int
 }
