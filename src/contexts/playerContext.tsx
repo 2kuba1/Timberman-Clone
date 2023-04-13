@@ -26,7 +26,7 @@ type PlayerProviderProps = {
   children: ReactNode;
 };
 
-function UserProvider({ children }: PlayerProviderProps) {
+function PlayerProvider({ children }: PlayerProviderProps) {
   const [player, setPlayer] = useState<Player>(defaultState.Player);
 
   return (
@@ -41,4 +41,4 @@ function UserProvider({ children }: PlayerProviderProps) {
   );
 }
 
-export default UserProvider;
+export default PlayerProvider;
