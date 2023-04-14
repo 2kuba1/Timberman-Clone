@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useContext, useRef, useState } from "react";
+import { SyncLoader } from "react-spinners";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
+import { api } from "~/utils/api";
 
 const StartNewGame = () => {
   const clickSound = useRef<HTMLAudioElement | undefined>(
@@ -19,6 +21,8 @@ const StartNewGame = () => {
       SetStatus("playing");
     }, 200);
   };
+
+  const getTop3 = api.scoreboard.getTop3.useQuery();
 
   return (
     <div className="flex h-screen w-screen items-center justify-center backdrop-blur-sm">
@@ -57,30 +61,38 @@ const StartNewGame = () => {
           <div className="relative flex w-full flex-col items-center gap-6">
             <Image src="/btn-score.png" alt="top-3" height="64" width="64" />
             <div className="flex w-full flex-col items-center gap-2 text-center font-bold">
-              <div className="flex items-center border-b-2 border-black">
-                <span className="material-symbols-outlined absolute left-8 text-menu-gold">
-                  workspace_premium
-                </span>
-                <span className="w-3/4 rounded-lg p-1 text-menu-gold">
-                  XXXXXXX
-                </span>
-              </div>
-              <div className="flex items-center border-b-2 border-black">
-                <span className="material-symbols-outlined absolute left-8 text-menu-silver">
-                  workspace_premium
-                </span>
-                <span className="r w-3/4 rounded-lg p-1 text-menu-silver">
-                  XXXXXXX
-                </span>
-              </div>
-              <div className="flex items-center">
-                <span className="material-symbols-outlined absolute left-8 text-menu-copper">
-                  workspace_premium
-                </span>
-                <span className="rounded-lgr w-3/4 p-1 text-menu-copper">
-                  XXXXXXX
-                </span>
-              </div>
+              {getTop3.data?.map((player, index) => (
+                <div className="flex items-center" key={index}>
+                  <span
+                    className={`material-symbols-outlined absolute left-8 ${
+                      index === 1
+                        ? "text-menu-silver"
+                        : index === 2
+                        ? "text-menu-copper"
+                        : "text-menu-gold"
+                    }`}
+                  >
+                    workspace_premium
+                  </span>
+                  <span
+                    className={`w-3/4 rounded-lg p-1 text-xl underline ${
+                      index === 1
+                        ? "decoration-menu-silver"
+                        : index === 2
+                        ? "decoration-menu-copper"
+                        : "decoration-menu-gold"
+                    }`}
+                  >
+                    {player.username}
+                  </span>
+                </div>
+              ))}
+              {getTop3.isLoading && <SyncLoader color="#FBB201" size="32" />}
+              {getTop3.isError && (
+                <p className="text-xl">
+                  Error status code: {getTop3.error.data?.httpStatus}
+                </p>
+              )}
             </div>
           </div>
         </motion.div>
