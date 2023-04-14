@@ -2,20 +2,21 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useContext, useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
+import PlayerMovement from "~/components/playerMovement";
 import StartNewGame from "~/components/startNewGame";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 
 const Home: NextPage = () => {
   const { Status, SetStatus } = useContext(GameStatusContext);
-  const [isThemePlaying, setisThemePlaying] = useState(false);
+  const [isThemePlaying, setisThemePlaying] = useState(0);
 
   useEffect(() => {
     if (Status === "playing") {
       setTimeout(() => {
-        setisThemePlaying(true);
+        setisThemePlaying(1);
       }, 300);
     } else {
-      setisThemePlaying(false);
+      setisThemePlaying(2);
     }
   }, [Status]);
 
@@ -29,6 +30,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
         {Status === "idle" && <StartNewGame />}
+        {Status === "playing" && <PlayerMovement />}
       </main>
     </>
   );
