@@ -8,21 +8,21 @@ import { GameStatusContext } from "~/contexts/gameStatusContext";
 
 const Home: NextPage = () => {
   const { Status, SetStatus } = useContext(GameStatusContext);
-  const [isThemePlaying, setisThemePlaying] = useState(0);
+  const [isThemePlaying, setisThemePlaying] = useState(false);
 
   useEffect(() => {
     if (Status === "playing") {
       setTimeout(() => {
-        setisThemePlaying(1);
+        setisThemePlaying(true);
       }, 300);
     } else {
-      setisThemePlaying(2);
+      setisThemePlaying(false);
     }
   }, [Status]);
 
   return (
     <>
-      {isThemePlaying && <ReactAudioPlayer src="theme.ogg" autoPlay loop />}
+      {isThemePlaying && <ReactAudioPlayer src="theme.mp3" autoPlay loop />}
       <Head>
         <title>Timberman</title>
         <meta name="description" content="" />

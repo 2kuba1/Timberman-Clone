@@ -8,7 +8,15 @@ const PlayerMovement = () => {
 
   const [animationStage, setAnimationStage] = useState(0);
 
+  const cutSound = new Audio("/cut.mp3");
+
+  const playCutSound = () => {
+    cutSound.currentTime = 0;
+    cutSound.play();
+  };
+
   useDetectKeyPress("ArrowLeft", async () => {
+    playCutSound();
     setPlayerPosition(1);
     setLastPostion("justify-start");
     setTimeout(() => {
@@ -22,6 +30,7 @@ const PlayerMovement = () => {
     }, 100);
   });
   useDetectKeyPress("ArrowRight", async () => {
+    playCutSound();
     setPlayerPosition(2);
     setLastPostion("justify-end");
     setTimeout(() => {
