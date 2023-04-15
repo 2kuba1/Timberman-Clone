@@ -104,7 +104,7 @@ const Game = () => {
       arr.push(log);
       lastLog = log;
     }
-    arr.push('/trunk1.png')
+    arr.push("/trunk1.png");
 
     setTreeBlocks(arr);
   }, []);

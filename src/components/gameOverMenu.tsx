@@ -1,6 +1,8 @@
 const GameOverMenu = () => {
   return (
-    <div className="flex h-screen w-screen items-center justify-center backdrop-blur-sm"></div>
+    <div className="flex h-full w-full justify-center backdrop-blur-sm">
+      <div className="flex flex-col items-center justify-center"></div>
+    </div>
   );
 };
 

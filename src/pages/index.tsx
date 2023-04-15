@@ -2,11 +2,9 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useContext, useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
-import Game from "~/components/game";
+import Game from "~/components/Game";
 import GameOverMenu from "~/components/gameOverMenu";
-import PlayerMovement from "~/components/playerMovement";
 import StartNewGameMenu from "~/components/startNewGameMenu";
-import Tree from "~/components/tree";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 
 const Home: NextPage = () => {

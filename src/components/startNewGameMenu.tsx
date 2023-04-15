@@ -75,7 +75,7 @@ const StartNewGameMenu = () => {
                     workspace_premium
                   </span>
                   <span
-                    className={`w-3/4 rounded-lg p-1 text-xl underline ${
+                    className={`w-full rounded-lg p-1 text-xl underline ${
                       index === 1
                         ? "decoration-menu-silver"
                         : index === 2
