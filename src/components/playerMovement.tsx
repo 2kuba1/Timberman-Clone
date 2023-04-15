@@ -1,62 +1,61 @@
 import Image from "next/image";
-import { useState } from "react";
-import useDetectKeyPress from "~/hooks/useDetectKeyPress";
+import { FC } from "react";
+import { useContext } from "react";
+import { GameStatusContext } from "~/contexts/gameStatusContext";
 
-const PlayerMovement = () => {
-  const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
-  const [lastPostion, setLastPostion] = useState("justify-start");
+interface Props {
+  playerPosition: number;
+  lastPosition: string;
+  animationStage: number;
+}
 
-  const [animationStage, setAnimationStage] = useState(0);
+const PlayerMovement: FC<Props> = ({playerPosition, animationStage, lastPosition}) => {
 
-  useDetectKeyPress("ArrowLeft", async () => {
-    setPlayerPosition(1);
-    setLastPostion("justify-start");
-    console.log("left");
-    setTimeout(() => {
-      setAnimationStage(1);
-      setTimeout(() => {
-        setAnimationStage(2);
-        setTimeout(() => {
-          setAnimationStage(0);
-        }, 100);
-      }, 100);
-    }, 100);
-  });
-  useDetectKeyPress("ArrowRight", async () => {
-    setPlayerPosition(2);
-    setLastPostion("justify-end");
-    console.log("right");
-    setTimeout(() => {
-      setAnimationStage(1);
-      setTimeout(() => {
-        setAnimationStage(2);
-        setTimeout(() => {
-          setAnimationStage(0);
-        }, 100);
-      }, 100);
-    }, 100);
-  });
+  const { Status } = useContext(GameStatusContext);
 
   return (
-    <div
-      className={`relative bottom-4 flex h-full w-full items-end ${
-        playerPosition === 0
-          ? lastPostion
-          : playerPosition === 1
-          ? "justify-start"
-          : "justify-end"
-      }`}
-    >
-      {animationStage === 0 && (
-        <Image src="/man1.png" alt="man" height="128" width="200" className='z-5' />
+    <>
+      {Status === "playing" && (
+        <div
+          className={`relative bottom-4 z-10 flex h-full w-full items-end ${
+            playerPosition === 0
+              ? lastPosition
+              : playerPosition === 1
+              ? "justify-start"
+              : "justify-end"
+          }`}
+        >
+          <Image
+            src={`${
+              animationStage === 0
+                ? "/man1.png"
+                : animationStage === 1
+                ? "/man2.png"
+                : "/man3.png"
+            }`}
+            alt="man"
+            height="200"
+            width="200"
+            className={`${
+              playerPosition === 1 ? "" : "scale-x-[-1] transform"
+            }`}
+          />
+        </div>
       )}
-      {animationStage === 1 && (
-        <Image src="/man2.png" alt="man" height="128" width="200" className='z-5' />
+      {Status === "gameover" && (
+        <div
+          className={`relative bottom-4 flex h-full w-full items-end ${
+            playerPosition === 0
+              ? lastPosition
+              : playerPosition === 1
+              ? "justify-start"
+              : "justify-end"
+          }`}
+        >
+          <Image src="/rip.png" alt="rip" height="128" width="128" />
+        </div>
       )}
-      {animationStage === 2 && (
-        <Image src="/man3.png" alt="man" height="128" width="200" className='z-5' />
-      )}
-    </div>
+    </>
   );
 };
 

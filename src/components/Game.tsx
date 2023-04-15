@@ -1,10 +1,104 @@
-import PlayerMovement from "~/components/playerMovement";
-import Tree from "~/components/tree";
+import PlayerMovement from "./playerMovement";
+import Tree from "./tree";
+import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { GameStatusContext } from "~/contexts/gameStatusContext";
+import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 
 const Game = () => {
+  const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
+  const [lastPostion, setLastPostion] = useState("justify-start");
+  const [animationStage, setAnimationStage] = useState(0);
+  const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
+  const { Status, SetStatus } = useContext(GameStatusContext);
+
+  const cutSound = new Audio("/cut.mp3");
+
+  const playCutSound = () => {
+    cutSound.currentTime = 0;
+    cutSound.play();
+  };
+
+  const newLog = (lastLog: string) => {
+    let src = "";
+    if (lastLog === "/branch1.png" || lastLog === "/branch2.png") {
+      return "/trunk1.png";
+    }
+    if (Math.random() * 4 <= 1) {
+      src = Math.random() > 0.5 ? "/trunk1.png" : "/trunk2.png";
+    } else {
+      if (Math.random() > 0.5) {
+        src = "/branch1.png";
+      } else {
+        src = "/branch2.png";
+      }
+    }
+    return src;
+  };
+
+  const addLog = () => {
+    setTreeBlocks((prev) => {
+      const arr = [...prev];
+      let lastLog = arr[0];
+      arr.unshift(newLog(lastLog as string));
+      arr.pop();
+      return arr;
+    });
+  };
+
+  useDetectKeyPress("ArrowLeft", async () => {
+    playCutSound();
+    setPlayerPosition(1);
+    setLastPostion("justify-start");
+    setTimeout(() => {
+      addLog();
+      setAnimationStage(1);
+      setTimeout(() => {
+        setAnimationStage(2);
+        setTimeout(() => {
+          setAnimationStage(0);
+        }, 100);
+      }, 100);
+    }, 100);
+  });
+  useDetectKeyPress("ArrowRight", async () => {
+    playCutSound();
+    setPlayerPosition(2);
+    setLastPostion("justify-end");
+    setTimeout(() => {
+      addLog();
+      setAnimationStage(1);
+      setTimeout(() => {
+        setAnimationStage(2);
+        setTimeout(() => {
+          setAnimationStage(0);
+        }, 100);
+      }, 100);
+    }, 100);
+  });
+
+  useEffect(() => {
+    const arr = ["/trunk1.png"];
+    let lastLog = "/trunk1.png";
+    for (let i = 0; i < 8; i++) {
+      const log = newLog(lastLog);
+      console.log(log);
+      arr.push(log);
+      lastLog = log;
+    }
+
+    setTreeBlocks(arr);
+  }, []);
+
   return (
     <>
-      <Tree />
+      <PlayerMovement
+        playerPosition={playerPosition}
+        lastPosition={lastPostion}
+        animationStage={animationStage}
+
+      />
+      <Tree treeBlocks={treeBlocks} />
     </>
   );
 };

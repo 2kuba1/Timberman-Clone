@@ -1,59 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
+import { FC } from "react";
 
-const tree = () => {
-  const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
-  
-  const newLog = (lastLog: string) => {
-    let src = "";
-    if(lastLog === '/branch1.png' || lastLog === '/branch2.png') {
-      return  '/trunk1.png';
-    }
-    if (Math.random() * 4 <= 1) {
-      src = Math.random() > 0.5 ? "/trunk1.png" : "/trunk2.png";
-    } else {
-      if (Math.random() > 0.5) {
-        src = "/branch1.png";
-      } else {
-        src = "/branch2.png";
-      }
-    }
-    return src;
-  };
+interface Props {
+  treeBlocks: string[];
+}
 
-  useEffect(() => {
-    const arr = ['/trunk1.png'];
-    let lastLog = '/trunk1.png';
-    for (let i = 0; i < 8; i++) {
-        const log = newLog(lastLog);
-        console.log(log);
-        arr.push(log);
-        lastLog = log;
-      }
-
-    setTreeBlocks(arr);
-  }, []);
-
-  useDetectKeyPress('ArrowLeft', () => {
-    setTreeBlocks((prev) => {
-      const arr = [...prev];
-      let lastLog = arr[0];
-      arr.unshift(newLog(lastLog as string));
-      arr.pop();
-      return arr;
-    });
-  });
-
-  useDetectKeyPress('ArrowRight', () => {
-    setTreeBlocks((prev) => {
-      const arr = [...prev];
-      let lastLog = arr[0];
-      arr.unshift(newLog(lastLog as string));
-      arr.pop();
-      return arr;
-    });
-  });
+const Tree: FC<Props> = ({treeBlocks}) => {
 
   return (
     <div className="absolute left-1/2 top-[45%] flex h-screen w-screen -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-end">
@@ -80,4 +34,4 @@ const tree = () => {
   );
 };
 
-export default tree;
+export default Tree;

@@ -5,7 +5,7 @@ import { SyncLoader } from "react-spinners";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import { api } from "~/utils/api";
 
-const StartNewGame = () => {
+const StartNewGameMenu = () => {
   const clickSound = useRef<HTMLAudioElement | undefined>(
     typeof Audio !== "undefined" ? new Audio("/menu.mp3") : undefined
   );
@@ -31,7 +31,7 @@ const StartNewGame = () => {
           initial={{ y: -1000, opacity: 0 }}
           animate={{ y: isClosing ? -1000 : 0, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring" }}
-          className="flex h-4/5 w-3/4 flex-col items-center rounded-xl bg-red-900 p-1"
+          className="flex h-4/5 w-72 flex-col items-center rounded-xl bg-red-900 p-1"
         >
           <Image
             src="/timberman_logo.png"
@@ -101,4 +101,4 @@ const StartNewGame = () => {
   );
 };
 
-export default StartNewGame;
+export default StartNewGameMenu;
