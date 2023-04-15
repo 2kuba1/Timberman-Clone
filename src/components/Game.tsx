@@ -96,7 +96,7 @@ const Game = () => {
   });
 
   useEffect(() => {
-    const arr = ["/trunk1.png"];
+    const arr = [];
     let lastLog = "/trunk1.png";
     for (let i = 0; i < 8; i++) {
       const log = newLog(lastLog);
@@ -104,6 +104,7 @@ const Game = () => {
       arr.push(log);
       lastLog = log;
     }
+    arr.push('/trunk1.png')
 
     setTreeBlocks(arr);
   }, []);
