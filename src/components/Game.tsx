@@ -14,6 +14,7 @@ const Game = () => {
   const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
   const { Status, SetStatus } = useContext(GameStatusContext);
   const { IsClicked, SetIsClicked } = useContext(ClickContext);
+  const [isShifting, setIsShifting] = useState(false);
   const [score, setScore] = useState(0);
 
   const cutSound = new Audio("/cut.mp3");
@@ -113,6 +114,14 @@ const Game = () => {
     setTreeBlocks([...arr, "/trunk1.png"]);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsShifting(prev => !prev);
+    }, 500)
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <Counter score={score} />
@@ -120,6 +129,7 @@ const Game = () => {
         playerPosition={playerPosition}
         lastPosition={lastPostion}
         animationStage={animationStage}
+        isShifting={isShifting}
       />
       <Tree treeBlocks={treeBlocks} />
     </>
