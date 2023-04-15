@@ -2,6 +2,7 @@ import PlayerMovement from "./playerMovement";
 import Tree from "./tree";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
+import { ClickContext } from "~/contexts/clickContext";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 
@@ -11,6 +12,7 @@ const Game = () => {
   const [animationStage, setAnimationStage] = useState(0);
   const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
   const { Status, SetStatus } = useContext(GameStatusContext);
+  const { IsClicked, SetIsClicked } = useContext(ClickContext);
 
   const cutSound = new Audio("/cut.mp3");
 
@@ -18,6 +20,17 @@ const Game = () => {
     cutSound.currentTime = 0;
     cutSound.play();
   };
+
+  useEffect(() => {
+    if (
+      (treeBlocks[treeBlocks.length - 1] === "/branch1.png" &&
+        playerPosition === 1) ||
+      (treeBlocks[treeBlocks.length - 1] === "/branch2.png" &&
+        playerPosition === 2)
+    ) {
+      SetStatus("gameOver");
+    }
+  }, [IsClicked]);
 
   const newLog = (lastLog: string) => {
     let src = "";
@@ -37,6 +50,7 @@ const Game = () => {
   };
 
   const addLog = () => {
+    SetIsClicked(true);
     setTreeBlocks((prev) => {
       const arr = [...prev];
       let lastLog = arr[0];
@@ -60,6 +74,7 @@ const Game = () => {
         }, 100);
       }, 100);
     }, 100);
+    SetIsClicked(false);
   });
   useDetectKeyPress("ArrowRight", async () => {
     playCutSound();
@@ -75,6 +90,7 @@ const Game = () => {
         }, 100);
       }, 100);
     }, 100);
+    SetIsClicked(false);
   });
 
   useEffect(() => {
@@ -96,7 +112,6 @@ const Game = () => {
         playerPosition={playerPosition}
         lastPosition={lastPostion}
         animationStage={animationStage}
-
       />
       <Tree treeBlocks={treeBlocks} />
     </>

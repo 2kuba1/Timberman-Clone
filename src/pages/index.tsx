@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useContext, useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
-import Game from "~/components/Game";
+import Game from "~/components/game";
 import GameOverMenu from "~/components/gameOverMenu";
 import PlayerMovement from "~/components/playerMovement";
 import StartNewGameMenu from "~/components/startNewGameMenu";
