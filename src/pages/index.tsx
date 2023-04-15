@@ -2,8 +2,9 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useContext, useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
+import GameOverMenu from "~/components/gameOverMenu";
 import PlayerMovement from "~/components/playerMovement";
-import StartNewGame from "~/components/startNewGame";
+import StartNewGameMenu from "~/components/startNewGameMenu";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 
 const Home: NextPage = () => {
@@ -29,8 +30,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
-        {Status === "idle" && <StartNewGame />}
+        {Status === "idle" && <StartNewGameMenu />}
         {Status === "playing" && <PlayerMovement />}
+        {Status === "gameOver" && <GameOverMenu />}
       </main>
     </>
   );
