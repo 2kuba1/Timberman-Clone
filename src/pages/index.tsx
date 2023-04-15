@@ -29,7 +29,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Timberman</title>
         <meta name="description" content="" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" type='image/png' href="/favicon.png" />
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
         {Status === "idle" && <StartNewGameMenu />}
