@@ -7,9 +7,9 @@ const useDetectKeyPress = (key: string, callback: () => void) => {
         callback();
       }
     };
-    document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener("keyup", keyDownHandler);
     return () => {
-      document.removeEventListener("keydown", keyDownHandler);
+      document.removeEventListener("keyup", keyDownHandler);
     };
   }, []);
 };

@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useContext, useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
+import Game from "~/components/Game";
 import GameOverMenu from "~/components/gameOverMenu";
 import PlayerMovement from "~/components/playerMovement";
 import StartNewGameMenu from "~/components/startNewGameMenu";
@@ -32,8 +33,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
         {Status === "idle" && <StartNewGameMenu />}
-        {Status === "playing" && <PlayerMovement />}
-        {Status === "playing" && <Tree />}
+        {Status === "playing" && <Game />}
         {Status === "gameOver" && <GameOverMenu />}
       </main>
     </>
