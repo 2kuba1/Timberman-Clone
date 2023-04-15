@@ -11,7 +11,6 @@ const PlayerMovement = () => {
   useDetectKeyPress("ArrowLeft", async () => {
     setPlayerPosition(1);
     setLastPostion("justify-start");
-    console.log("left");
     setTimeout(() => {
       setAnimationStage(1);
       setTimeout(() => {
@@ -25,7 +24,6 @@ const PlayerMovement = () => {
   useDetectKeyPress("ArrowRight", async () => {
     setPlayerPosition(2);
     setLastPostion("justify-end");
-    console.log("right");
     setTimeout(() => {
       setAnimationStage(1);
       setTimeout(() => {
