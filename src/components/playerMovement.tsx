@@ -1,18 +1,20 @@
 import Image from "next/image";
 import { FC } from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 
 interface Props {
   playerPosition: number;
   lastPosition: string;
   animationStage: number;
+  isShifting: boolean;
 }
 
 const PlayerMovement: FC<Props> = ({
   playerPosition,
   animationStage,
   lastPosition,
+  isShifting,
 }) => {
   const { Status } = useContext(GameStatusContext);
 
@@ -31,7 +33,7 @@ const PlayerMovement: FC<Props> = ({
           <Image
             src={`${
               animationStage === 0
-                ? "/man1.png"
+                ? isShifting ? "/man1.png" : "/man4.png"
                 : animationStage === 1
                 ? "/man2.png"
                 : "/man3.png"
