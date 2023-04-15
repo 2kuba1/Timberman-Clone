@@ -28,6 +28,8 @@ const Game = () => {
       (treeBlocks[treeBlocks.length - 1] === "/branch2.png" &&
         playerPosition === 2)
     ) {
+      const gameOverSound = new Audio("/death.mp3");
+      gameOverSound.play();
       SetStatus("gameOver");
     }
   }, [IsClicked]);
