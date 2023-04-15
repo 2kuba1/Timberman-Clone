@@ -50,7 +50,7 @@ const PlayerMovement = () => {
     <>
       {Status === "playing" && (
         <div
-          className={`relative bottom-4 flex h-full w-full items-end ${
+          className={`relative bottom-4 z-10 flex h-full w-full items-end ${
             playerPosition === 0
               ? lastPostion
               : playerPosition === 1
@@ -67,8 +67,11 @@ const PlayerMovement = () => {
                 : "/man3.png"
             }`}
             alt="man"
-            height="128"
-            width="128"
+            height="200"
+            width="200"
+            className={`${
+              playerPosition === 1 ? "" : "scale-x-[-1] transform"
+            }`}
           />
         </div>
       )}
