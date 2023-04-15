@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { ClickContext } from "~/contexts/clickContext";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
+import Counter from "./counter";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
@@ -13,6 +14,7 @@ const Game = () => {
   const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
   const { Status, SetStatus } = useContext(GameStatusContext);
   const { IsClicked, SetIsClicked } = useContext(ClickContext);
+  const [score, setScore] = useState(0);
 
   const cutSound = new Audio("/cut.mp3");
 
@@ -28,6 +30,7 @@ const Game = () => {
       (treeBlocks[treeBlocks.length - 1] === "/branch2.png" &&
         playerPosition === 2)
     ) {
+      setScore(prev => prev - 1)
       const gameOverSound = new Audio("/death.mp3");
       gameOverSound.play();
       SetStatus("gameOver");
@@ -63,6 +66,7 @@ const Game = () => {
   };
 
   useDetectKeyPress("ArrowLeft", async () => {
+    setScore((prev) => prev + 1);
     playCutSound();
     setPlayerPosition(1);
     setLastPostion("justify-start");
@@ -79,6 +83,7 @@ const Game = () => {
     SetIsClicked(false);
   });
   useDetectKeyPress("ArrowRight", async () => {
+    setScore((prev) => prev + 1);
     playCutSound();
     setPlayerPosition(2);
     setLastPostion("justify-end");
@@ -96,21 +101,21 @@ const Game = () => {
   });
 
   useEffect(() => {
-    const arr = [];
-    let lastLog = "/trunk1.png";
+    let arr = [];
+    let prevLog = "/trunk1.png";
     for (let i = 0; i < 8; i++) {
-      const log = newLog(lastLog);
+      const log = newLog(prevLog);
       console.log(log);
       arr.push(log);
-      lastLog = log;
+      prevLog = log;
     }
-    arr.push('/trunk1.png')
 
-    setTreeBlocks(arr);
+    setTreeBlocks([...arr, "/trunk1.png"]);
   }, []);
 
   return (
     <>
+      <Counter score={score} />
       <PlayerMovement
         playerPosition={playerPosition}
         lastPosition={lastPostion}
