@@ -87,7 +87,7 @@ const StartNewGame = () => {
                   </span>
                 </div>
               ))}
-              {getTop3.isLoading && <SyncLoader color="#FBB201" size="32" />}
+              {getTop3.isLoading && <SyncLoader color="#FBB201" size="32px" />}
               {getTop3.isError && (
                 <p className="text-xl">
                   Error status code: {getTop3.error.data?.httpStatus}
