@@ -47,15 +47,18 @@ const PlayerMovement = () => {
           : "justify-end"
       }`}
     >
-      {animationStage === 0 && (
-        <Image src="/man1.png" alt="man" height="128" width="128" />
-      )}
-      {animationStage === 1 && (
-        <Image src="/man2.png" alt="man" height="128" width="128" />
-      )}
-      {animationStage === 2 && (
-        <Image src="/man3.png" alt="man" height="128" width="128" />
-      )}
+      <Image
+        src={`${
+          animationStage === 0
+            ? "/man1.png"
+            : animationStage === 1
+            ? "/man2.png"
+            : "/man3.png"
+        }`}
+        alt="man"
+        height="128"
+        width="128"
+      />
     </div>
   );
 };
