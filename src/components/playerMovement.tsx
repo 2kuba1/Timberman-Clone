@@ -9,8 +9,11 @@ interface Props {
   animationStage: number;
 }
 
-const PlayerMovement: FC<Props> = ({playerPosition, animationStage, lastPosition}) => {
-
+const PlayerMovement: FC<Props> = ({
+  playerPosition,
+  animationStage,
+  lastPosition,
+}) => {
   const { Status } = useContext(GameStatusContext);
 
   return (
@@ -42,7 +45,7 @@ const PlayerMovement: FC<Props> = ({playerPosition, animationStage, lastPosition
           />
         </div>
       )}
-      {Status === "gameover" && (
+      {Status === "gameOver" && (
         <div
           className={`relative bottom-4 flex h-full w-full items-end ${
             playerPosition === 0
