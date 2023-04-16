@@ -156,13 +156,16 @@ const Game = () => {
     }
   }, [barTime]);
 
+  useEffect(() => {
+    sessionStorage.setItem('score', score.toString());
+  }, [score]);
+
   return (
     <>
       <div className="absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center">
         <ScreenBtn callback={handleLeftClick} />
         <ScreenBtn callback={handleRightClick} />
       </div>
-      {Status === "gameOver" && <GameOverMenu />}
       <div className={`${Status === "gameOver" ? "hidden" : ""}`}>
         <TimeBar time={barTime} />
       </div>
