@@ -1,6 +1,6 @@
 import PlayerMovement from "./playerMovement";
 import Tree from "./tree";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import { ClickContext } from "~/contexts/clickContext";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
@@ -16,8 +16,11 @@ const Game = () => {
   const [animationStage, setAnimationStage] = useState(0);
   const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
   const [isShifting, setIsShifting] = useState(false);
-  const [barTime, setBarTime] = useState(100);
+  const [barTime, setBarTime] = useState(50);
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(score);
+  const timeRef = useRef(barTime);
+  
 
   const { Status, SetStatus } = useContext(GameStatusContext);
   const { IsClicked, SetIsClicked } = useContext(ClickContext);
@@ -82,7 +85,7 @@ const Game = () => {
     setLastPostion("justify-start");
     setTimeout(() => {
       if (barTime < 200) {
-        setBarTime((prev) => prev + 1);
+        setBarTime((prev) => prev + 5);
       }
       addLog();
       setAnimationStage(1);
@@ -101,10 +104,9 @@ const Game = () => {
     //playCutSound();
     setPlayerPosition(2);
     setLastPostion("justify-end");
+    setBarTime((prev) => timeRef.current < 100 ? prev + 5 : prev);
+    console.log('TIME', timeRef.current)
     setTimeout(() => {
-      if (barTime < 200) {
-        setBarTime((prev) => prev + 2);
-      }
       addLog();
       setAnimationStage(1);
       setTimeout(() => {
@@ -142,23 +144,64 @@ const Game = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setBarTime((prev) => prev - 0.8);
-    }, 100);
+      setBarTime((prev) => {
+        console.log(scoreRef.current)
+        if(scoreRef.current > 1 && scoreRef.current < 30) {
+          return prev - 1;
+        }
+        else if(scoreRef.current > 30 && scoreRef.current < 80) {
+          return prev - 1.1;
+        }
+        else if(scoreRef.current > 80 && scoreRef.current < 150) {
+          return prev - 1.3;
+        }
+        else if(scoreRef.current > 150 && scoreRef.current < 250) {
+          return prev - 1.4;
+        }
+        else if(scoreRef.current > 250 && scoreRef.current < 350) {
+          return prev - 1.5;
+        }
+        else if(scoreRef.current > 350 && scoreRef.current < 500) {
+          return prev - 1.6;
+        }
+        else if(scoreRef.current > 500 && scoreRef.current < 700) {
+          return prev - 1.7;
+        }
+        else if(scoreRef.current > 700 && scoreRef.current < 900) {
+          return prev - 1.8;
+        }
+        else if(scoreRef.current > 900 && scoreRef.current < 1000) {
+          return prev - 1.9;
+        }
+        else if(scoreRef.current > 1000 && scoreRef.current < 1200) {
+          return prev - 1.2;
+        }
+        else if(scoreRef.current > 1200 && scoreRef.current < 1500) {
+          return prev - 1.21;
+        }
+        else if(scoreRef.current > 2000) {
+          return prev - 1.22;
+        }
+        return prev;
+      });
+    }, 200);
 
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
+    timeRef.current = barTime;
     if (Status === "gameOver") return;
     if (barTime * 2 <= 0) {
       //gameOverSound.play();
       SetStatus("gameOver");
     }
   }, [barTime]);
-
+  
   useEffect(() => {
     sessionStorage.setItem('score', score.toString());
-  }, [score]);
+    scoreRef.current = score;
+  }, [score])
 
   return (
     <>
