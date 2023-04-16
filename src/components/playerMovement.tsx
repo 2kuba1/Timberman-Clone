@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FC } from "react";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 
 interface Props {

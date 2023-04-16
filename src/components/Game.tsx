@@ -14,7 +14,7 @@ const Game = () => {
   const [lastPostion, setLastPostion] = useState("justify-start");
   const [animationStage, setAnimationStage] = useState(0);
   const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
-  const { Status, SetStatus } = useContext(GameStatusContext);
+  const { SetStatus } = useContext(GameStatusContext);
   const { IsClicked, SetIsClicked } = useContext(ClickContext);
   const [isShifting, setIsShifting] = useState(false);
   const [barTime, setBarTime] = useState(100);
