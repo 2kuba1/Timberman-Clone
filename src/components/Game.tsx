@@ -7,6 +7,7 @@ import { GameStatusContext } from "~/contexts/gameStatusContext";
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 import Counter from "./counter";
 import TimeBar from "./timeBar";
+import ScreenBtn from "./screenBtn";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
@@ -18,6 +19,7 @@ const Game = () => {
   const [isShifting, setIsShifting] = useState(false);
   const [barTime, setBarTime] = useState(100);
   const [score, setScore] = useState(0);
+  let increase = 1;
   
   const gameOverSound = new Audio("/death.mp3");
   const cutSound = new Audio("/cut.mp3");
@@ -68,7 +70,7 @@ const Game = () => {
     });
   };
 
-  useDetectKeyPress("ArrowLeft", async () => {
+  const handleLeftClick = async () => {
     setScore((prev) => prev + 1);
     playCutSound();
     setPlayerPosition(1);
@@ -87,8 +89,9 @@ const Game = () => {
       }, 100);
     }, 100);
     SetIsClicked(false);
-  });
-  useDetectKeyPress("ArrowRight", async () => {
+  }
+
+  const handleRightClick = async () => {
     setScore((prev) => prev + 1);
     playCutSound();
     setPlayerPosition(2);
@@ -107,7 +110,10 @@ const Game = () => {
       }, 100);
     }, 100);
     SetIsClicked(false);
-  });
+  }
+
+  useDetectKeyPress("ArrowLeft", handleLeftClick);
+  useDetectKeyPress("ArrowRight", handleRightClick);
 
   useEffect(() => {
     let arr = [];
@@ -132,7 +138,7 @@ const Game = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setBarTime(prev => prev - 0.8);
+      setBarTime(prev => prev - (0.8 * increase));
     }, 100)
 
     return () => clearInterval(interval);
@@ -148,6 +154,10 @@ const Game = () => {
 
   return (
     <>
+    <div className='absolute top-0 left-0 w-screen h-screen flex items-center justify-center z-50'>
+      <ScreenBtn callback={handleLeftClick}/>
+      <ScreenBtn callback={handleRightClick}/>
+    </div>
       <TimeBar time={barTime}/>
       <Counter score={score} />
       <PlayerMovement
