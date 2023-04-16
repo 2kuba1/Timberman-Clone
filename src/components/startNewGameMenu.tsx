@@ -16,14 +16,11 @@ const StartNewGameMenu = () => {
   const [addUserError, setAddUserError] = useState<ZodIssue>();
   const [cookies, setCookie] = useCookies(["id"]);
 
-  const addUser = api.scoreboard.createUser.useMutation();
+  const addUser = api.user.createUser.useMutation();
   const getTop3 = api.scoreboard.getTop3.useQuery();
-  const getUsername = api.scoreboard.getUsername.useQuery(
-    cookies.id as string,
-    {
-      enabled: false,
-    }
-  );
+  const getUsername = api.user.getUsername.useQuery(cookies.id as string, {
+    enabled: false,
+  });
 
   useEffect(() => {
     const fetch = async () => {
@@ -97,6 +94,11 @@ const StartNewGameMenu = () => {
               onClick={() => setPlay(true)}
             />
             {addUser.isLoading && <ClipLoader color="#FBB201" size="32px" />}
+            {addUser.isError && (
+              <p className="text-xl">
+                Error status code: {addUser.error.data?.httpStatus}
+              </p>
+            )}
             {addUserError && (
               <p className="text-center text-sm font-bold">
                 {addUserError.message}

@@ -20,7 +20,6 @@ const Game = () => {
   const [score, setScore] = useState(0);
   const scoreRef = useRef(score);
   const timeRef = useRef(barTime);
-  
 
   const { Status, SetStatus } = useContext(GameStatusContext);
   const { IsClicked, SetIsClicked } = useContext(ClickContext);
@@ -83,7 +82,7 @@ const Game = () => {
     //playCutSound();
     setPlayerPosition(1);
     setLastPostion("justify-start");
-    setBarTime((prev) => timeRef.current < 100 ? prev + 5 : prev);
+    setBarTime((prev) => (timeRef.current < 100 ? prev + 5 : prev));
     setTimeout(() => {
       addLog();
       setAnimationStage(1);
@@ -102,8 +101,8 @@ const Game = () => {
     //playCutSound();
     setPlayerPosition(2);
     setLastPostion("justify-end");
-    setBarTime((prev) => timeRef.current < 100 ? prev + 5 : prev);
-    console.log('TIME', timeRef.current)
+    setBarTime((prev) => (timeRef.current < 100 ? prev + 5 : prev));
+    console.log("TIME", timeRef.current);
     setTimeout(() => {
       addLog();
       setAnimationStage(1);
@@ -143,41 +142,30 @@ const Game = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setBarTime((prev) => {
-        console.log(scoreRef.current)
-        if(scoreRef.current > 1 && scoreRef.current < 30) {
+        console.log(scoreRef.current);
+        if (scoreRef.current > 1 && scoreRef.current < 30) {
           return prev - 1;
-        }
-        else if(scoreRef.current > 30 && scoreRef.current < 80) {
+        } else if (scoreRef.current > 30 && scoreRef.current < 80) {
           return prev - 1.1;
-        }
-        else if(scoreRef.current > 80 && scoreRef.current < 150) {
+        } else if (scoreRef.current > 80 && scoreRef.current < 150) {
           return prev - 1.3;
-        }
-        else if(scoreRef.current > 150 && scoreRef.current < 250) {
+        } else if (scoreRef.current > 150 && scoreRef.current < 250) {
           return prev - 1.4;
-        }
-        else if(scoreRef.current > 250 && scoreRef.current < 350) {
+        } else if (scoreRef.current > 250 && scoreRef.current < 350) {
           return prev - 1.5;
-        }
-        else if(scoreRef.current > 350 && scoreRef.current < 500) {
+        } else if (scoreRef.current > 350 && scoreRef.current < 500) {
           return prev - 1.6;
-        }
-        else if(scoreRef.current > 500 && scoreRef.current < 700) {
+        } else if (scoreRef.current > 500 && scoreRef.current < 700) {
           return prev - 1.7;
-        }
-        else if(scoreRef.current > 700 && scoreRef.current < 900) {
+        } else if (scoreRef.current > 700 && scoreRef.current < 900) {
           return prev - 1.8;
-        }
-        else if(scoreRef.current > 900 && scoreRef.current < 1000) {
+        } else if (scoreRef.current > 900 && scoreRef.current < 1000) {
           return prev - 1.9;
-        }
-        else if(scoreRef.current > 1000 && scoreRef.current < 1200) {
+        } else if (scoreRef.current > 1000 && scoreRef.current < 1200) {
           return prev - 1.2;
-        }
-        else if(scoreRef.current > 1200 && scoreRef.current < 1500) {
+        } else if (scoreRef.current > 1200 && scoreRef.current < 1500) {
           return prev - 1.21;
-        }
-        else if(scoreRef.current > 2000) {
+        } else if (scoreRef.current > 2000) {
           return prev - 1.22;
         }
         return prev;
@@ -195,11 +183,11 @@ const Game = () => {
       SetStatus("gameOver");
     }
   }, [barTime]);
-  
+
   useEffect(() => {
-    sessionStorage.setItem('score', score.toString());
+    sessionStorage.setItem("score", score.toString());
     scoreRef.current = score;
-  }, [score])
+  }, [score]);
 
   return (
     <>

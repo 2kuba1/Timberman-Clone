@@ -1,38 +1,86 @@
+import { isError } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { ClipLoader } from "react-spinners";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
+import { api } from "~/utils/api";
 
 const GameOverMenu = () => {
   const { SetStatus } = useContext(GameStatusContext);
 
+  const [cookies] = useCookies(["id"]);
+
+  const [bestScore, setBestScore] = useState(0);
+
+  const getBestScore = api.scoreboard.getBestScore.useQuery(cookies.id);
+  const updateScore = api.scoreboard.updateScore.useMutation();
+
+  useEffect(() => {
+    if (getBestScore.data) {
+      console.log(getBestScore.data!.score);
+      const update = async () => {
+        if (
+          getBestScore.data!.score < Number(sessionStorage.getItem("score"))
+        ) {
+          setBestScore(Number(sessionStorage.getItem("score")));
+          await updateScore.mutateAsync({
+            id: cookies.id as string,
+            newScore: Number(sessionStorage.getItem("score")),
+          });
+        } else {
+          setBestScore(getBestScore.data!.score);
+        }
+      };
+      update().catch(console.error);
+    }
+  }, [getBestScore.data]);
+
   return (
-    <div className="absolute z-[60] items-center justify-between flex h-full w-full flex-col backdrop-blur-sm">
-      <div className='absolute flex justify-center top-[38vh] text-2xl'>
-        <h2>{sessionStorage.getItem('score')}</h2>
+    <div className="z-[60] flex h-full w-full flex-col items-center justify-between backdrop-blur-sm">
+      <div className="absolute top-[30vh] flex flex-col items-center justify-center text-2xl">
+        <h2 className="text-2xl font-bold">{bestScore}</h2>
       </div>
-      <Image 
-      src='/gameover.png'
-      width={300}
-      height={300}
-      alt='gameover scoreboard'
-      />
-
+      <div className="absolute top-[38vh] flex flex-col justify-center text-2xl">
+        <h2 className="text-2xl font-bold">
+          {sessionStorage.getItem("score")}
+        </h2>
+      </div>
+      {getBestScore.isLoading && <ClipLoader color="#FBB201" size="32px" />}
+      {getBestScore.isError && <p>{getBestScore.error.data?.httpStatus}</p>}
+      <AnimatePresence>
+        <motion.div
+          initial={{ y: -200 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.5, type: "spring" }}
+        >
+          <Image
+            src="/gameover.png"
+            width={300}
+            height={300}
+            alt="gameover scoreboard"
+          />
+        </motion.div>
+      </AnimatePresence>
       <Image
-      src='/play.png'
-      width={150}
-      height={150}
-      alt='play button'
-      onClick={() => SetStatus('playing')}
+        src="/play.png"
+        width={150}
+        height={150}
+        alt="play button"
+        onClick={() => SetStatus("playing")}
       />
-
-      <Image
-      src='/rip.png'
-      width={150}
-      height={150}
-      alt='rip'
-      className='relative bottom-5'
-      />
-      
+      <AnimatePresence>
+        <motion.div initial={{ y: 150 }} animate={{ y: 0 }} exit={{ y: -150 }}>
+          <Image
+            src="/rip.png"
+            width={150}
+            height={150}
+            alt="rip"
+            className="relative bottom-5"
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
