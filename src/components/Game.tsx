@@ -57,13 +57,9 @@ const Game = () => {
 
   const addLog = () => {
     SetIsClicked(true);
-    const last = treeBlocks[treeBlocks.length - 1];
-    const first = treeBlocks[0];
     setTreeBlocks((prev) => {
       const arr = [...prev];
       let lastLog = arr[0];
-      console.log("LAST LOG :):", last);
-      console.log("FIRST LOG :):", last);
       arr.unshift(newLog(lastLog as string));
       arr.pop();
       return arr;
