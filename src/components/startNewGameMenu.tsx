@@ -36,21 +36,20 @@ const StartNewGameMenu = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const schema = z
-      .string()
-      .min(3, { message: "Username must contain at least 3 letters" })
-      .max(25, { message: "Username must conatin less than 25 letters" });
-    const check = await schema.safeParseAsync(username);
-
-    if (!check.success) {
-      console.log(check.error);
-      setAddUserError(check.error.issues[0]);
-      return;
-    }
-
     if (!cookies.id) {
       const id = await addUser.mutateAsync(username);
       setCookie("id", id);
+      const schema = z
+        .string()
+        .min(3, { message: "Username must contain at least 3 letters" })
+        .max(25, { message: "Username must conatin less than 25 letters" });
+      const check = await schema.safeParseAsync(username);
+
+      if (!check.success) {
+        console.log(check.error);
+        setAddUserError(check.error.issues[0]);
+        return;
+      }
     }
 
     setIsClosing(true);
