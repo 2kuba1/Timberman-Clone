@@ -94,14 +94,14 @@ const StartNewGameMenu = () => {
               onClick={() => setPlay(true)}
             />
             {addUser.isLoading && <ClipLoader color="#FBB201" size="32px" />}
-            {addUser.isError && (
-              <p className="text-xl">
-                Error status code: {addUser.error.data?.httpStatus}
-              </p>
-            )}
             {addUserError && (
               <p className="text-center text-sm font-bold">
                 {addUserError.message}
+              </p>
+            )}
+            {addUser.isError && (
+              <p className="text-xl">
+                Error status code: {addUser.error.data?.code}
               </p>
             )}
           </form>
