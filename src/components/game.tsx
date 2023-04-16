@@ -83,7 +83,7 @@ const Game = () => {
     //playCutSound();
     setPlayerPosition(1);
     setLastPostion("justify-start");
-    setBarTime((prev) => timeRef.current < 100 ? prev + 5 : prev);
+    setBarTime((prev) => timeRef.current < 100 ? prev + 3 : prev);
     setTimeout(() => {
       addLog();
       setAnimationStage(1);
