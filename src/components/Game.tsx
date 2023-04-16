@@ -6,6 +6,7 @@ import { ClickContext } from "~/contexts/clickContext";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 import Counter from "./counter";
+import TimeBar from "./timeBar";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
@@ -15,8 +16,10 @@ const Game = () => {
   const { Status, SetStatus } = useContext(GameStatusContext);
   const { IsClicked, SetIsClicked } = useContext(ClickContext);
   const [isShifting, setIsShifting] = useState(false);
+  const [barTime, setBarTime] = useState(100);
   const [score, setScore] = useState(0);
-
+  
+  const gameOverSound = new Audio("/death.mp3");
   const cutSound = new Audio("/cut.mp3");
 
   const playCutSound = () => {
@@ -32,7 +35,6 @@ const Game = () => {
         playerPosition === 2)
     ) {
       setScore(prev => prev - 1)
-      const gameOverSound = new Audio("/death.mp3");
       gameOverSound.play();
       SetStatus("gameOver");
     }
@@ -72,6 +74,9 @@ const Game = () => {
     setPlayerPosition(1);
     setLastPostion("justify-start");
     setTimeout(() => {
+      if(barTime < 200) {
+        setBarTime(prev => prev + 1);
+      }
       addLog();
       setAnimationStage(1);
       setTimeout(() => {
@@ -89,6 +94,9 @@ const Game = () => {
     setPlayerPosition(2);
     setLastPostion("justify-end");
     setTimeout(() => {
+      if(barTime < 200) {
+        setBarTime(prev => prev + 2);
+      }
       addLog();
       setAnimationStage(1);
       setTimeout(() => {
@@ -122,8 +130,25 @@ const Game = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBarTime(prev => prev - 0.8);
+    }, 100)
+
+    return () => clearInterval(interval);
+  }, [])
+
+  useEffect(() => {
+    if((barTime * 2) <= 0) {
+      gameOverSound.play();
+      SetStatus("gameOver");
+      console.log('DIE NIGGA')
+    }
+  }, [barTime])
+
   return (
     <>
+      <TimeBar time={barTime}/>
       <Counter score={score} />
       <PlayerMovement
         playerPosition={playerPosition}
