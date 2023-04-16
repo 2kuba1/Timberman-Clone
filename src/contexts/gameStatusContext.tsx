@@ -13,7 +13,6 @@ export interface GameStatusContextInterface {
 
 const defaultState = {
   Status: "idle",
-  SetStatus: (setStatus: string) => {},
 } as GameStatusContextInterface;
 
 export const GameStatusContext = createContext(defaultState);

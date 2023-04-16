@@ -13,7 +13,6 @@ export interface ClickContextInterface {
 
 const defaultState = {
   IsClicked: false,
-  SetIsClicked: (setIsClicked: boolean) => {},
 } as ClickContextInterface;
 
 export const ClickContext = createContext(defaultState);

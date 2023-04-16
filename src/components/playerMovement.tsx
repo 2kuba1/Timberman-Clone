@@ -33,7 +33,9 @@ const PlayerMovement: FC<Props> = ({
           <Image
             src={`${
               animationStage === 0
-                ? isShifting ? "/man1.png" : "/man4.png"
+                ? isShifting
+                  ? "/man1.png"
+                  : "/man4.png"
                 : animationStage === 1
                 ? "/man2.png"
                 : "/man3.png"

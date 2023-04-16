@@ -1,14 +1,17 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useContext, useRef, useState } from "react";
-import { SyncLoader } from "react-spinners";
+import ReactAudioPlayer from "react-audio-player";
+import { ClipLoader } from "react-spinners";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import { api } from "~/utils/api";
 
 const StartNewGameMenu = () => {
-  const clickSound = useRef<HTMLAudioElement | undefined>(
-    typeof Audio !== "undefined" ? new Audio("/menu.mp3") : undefined
-  );
+  // const clickSound = useRef<HTMLAudioElement | undefined>(
+  //   typeof Audio !== "undefined" ? new Audio("/menu.mp3") : undefined
+  // );
+
+  const [play, setPlay] = useState(false);
 
   const { SetStatus } = useContext(GameStatusContext);
 
@@ -55,9 +58,10 @@ const StartNewGameMenu = () => {
               type="submit"
               value="Start"
               className="h-10 w-2/3 cursor-pointer rounded-xl bg-menu-yellow font-bold text-red-900 duration-100 active:scale-110 active:bg-menu-copper"
-              onClick={() => clickSound.current?.play()}
+              onClick={() => setPlay(true)}
             />
           </form>
+          {play && <ReactAudioPlayer src="/menu.mp3" autoPlay />}
           <div className="relative flex w-full flex-col items-center gap-6">
             <Image src="/btn-score.png" alt="top-3" height="64" width="64" />
             <div className="flex w-full flex-col items-center gap-2 text-center font-bold">
@@ -87,7 +91,7 @@ const StartNewGameMenu = () => {
                   </span>
                 </div>
               ))}
-              {getTop3.isLoading && <SyncLoader color="#FBB201" size="32px" />}
+              {getTop3.isLoading && <ClipLoader color="#FBB201" size="32px" />}
               {getTop3.isError && (
                 <p className="text-xl">
                   Error status code: {getTop3.error.data?.httpStatus}

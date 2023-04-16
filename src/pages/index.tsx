@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useContext, useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import Game from "~/components/game";
-import GameOverMenu from "~/components/gameOverMenu";
 import StartNewGameMenu from "~/components/startNewGameMenu";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 
@@ -27,12 +26,11 @@ const Home: NextPage = () => {
       <Head>
         <title>Timberman</title>
         <meta name="description" content="" />
-        <link rel="shortcut icon" type='image/png' href="/favicon.png" />
+        <link rel="shortcut icon" type="image/png" href="/favicon.png" />
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
         {Status === "idle" && <StartNewGameMenu />}
-        {Status === "playing" && <Game />}
-        {Status === "gameOver" && <GameOverMenu />}
+        {Status !== "idle" && <Game />}
       </main>
     </>
   );

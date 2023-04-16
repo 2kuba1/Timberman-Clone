@@ -31,8 +31,8 @@ export const scoreboardRouter = createTRPCRouter({
   //   }),
   updateScore: publicProcedure
     .input(z.object({ id: z.string(), newScore: z.number() }))
-    .mutation(({ ctx, input }) => {
-      ctx.prisma.scoreboard.update({
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.scoreboard.update({
         data: {
           score: input.newScore,
         },

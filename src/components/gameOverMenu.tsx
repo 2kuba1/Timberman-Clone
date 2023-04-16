@@ -1,7 +1,7 @@
 const GameOverMenu = () => {
   return (
-    <div className="flex h-full w-full justify-center backdrop-blur-sm">
-      <div className="flex flex-col items-center justify-center"></div>
+    <div className="absolute z-20 flex  h-full w-full items-center justify-center backdrop-blur-sm">
+      <h1 className="text-3xl">You have died</h1>
     </div>
   );
 };

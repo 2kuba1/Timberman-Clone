@@ -6,23 +6,33 @@ import { ClickContext } from "~/contexts/clickContext";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 import Counter from "./counter";
+import TimeBar from "./timeBar";
+import GameOverMenu from "./gameOverMenu";
+import { check } from "prettier";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
   const [lastPostion, setLastPostion] = useState("justify-start");
   const [animationStage, setAnimationStage] = useState(0);
   const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
-  const { Status, SetStatus } = useContext(GameStatusContext);
-  const { IsClicked, SetIsClicked } = useContext(ClickContext);
   const [isShifting, setIsShifting] = useState(false);
+  const [barTime, setBarTime] = useState(100);
   const [score, setScore] = useState(0);
 
+  const { Status, SetStatus } = useContext(GameStatusContext);
+  const { IsClicked, SetIsClicked } = useContext(ClickContext);
+
+  const gameOverSound = new Audio("/death.mp3");
   const cutSound = new Audio("/cut.mp3");
 
-  const playCutSound = () => {
+  const playCutSound = async () => {
     cutSound.currentTime = 0;
-    cutSound.play();
+    await cutSound.play();
   };
+
+  useEffect(() => {
+    console.log(Status);
+  }, [Status]);
 
   useEffect(() => {
     if (
@@ -32,8 +42,7 @@ const Game = () => {
         playerPosition === 2)
     ) {
       setScore((prev) => prev - 1);
-      const gameOverSound = new Audio("/death.mp3");
-      gameOverSound.play();
+      //await gameOverSound.play();
       SetStatus("gameOver");
     }
   }, [IsClicked]);
@@ -57,25 +66,24 @@ const Game = () => {
 
   const addLog = () => {
     SetIsClicked(true);
-    const last = treeBlocks[treeBlocks.length - 1];
-    const first = treeBlocks[0];
     setTreeBlocks((prev) => {
       const arr = [...prev];
-      let lastLog = arr[0];
-      console.log("LAST LOG :):", last);
-      console.log("FIRST LOG :):", last);
+      const lastLog = arr[0];
       arr.unshift(newLog(lastLog as string));
       arr.pop();
       return arr;
     });
   };
 
-  useDetectKeyPress("ArrowLeft", async () => {
+  useDetectKeyPress("ArrowLeft", () => {
     setScore((prev) => prev + 1);
-    playCutSound();
+    //playCutSound();
     setPlayerPosition(1);
     setLastPostion("justify-start");
     setTimeout(() => {
+      if (barTime < 200) {
+        setBarTime((prev) => prev + 1);
+      }
       addLog();
       setAnimationStage(1);
       setTimeout(() => {
@@ -87,12 +95,16 @@ const Game = () => {
     }, 100);
     SetIsClicked(false);
   });
-  useDetectKeyPress("ArrowRight", async () => {
+
+  useDetectKeyPress("ArrowRight", () => {
     setScore((prev) => prev + 1);
-    playCutSound();
+    //playCutSound();
     setPlayerPosition(2);
     setLastPostion("justify-end");
     setTimeout(() => {
+      if (barTime < 200) {
+        setBarTime((prev) => prev + 2);
+      }
       addLog();
       setAnimationStage(1);
       setTimeout(() => {
@@ -106,11 +118,10 @@ const Game = () => {
   });
 
   useEffect(() => {
-    let arr = [];
+    const arr = [];
     let prevLog = "/trunk1.png";
     for (let i = 0; i < 8; i++) {
       const log = newLog(prevLog);
-      console.log(log);
       arr.push(log);
       prevLog = log;
     }
@@ -120,22 +131,47 @@ const Game = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsShifting(prev => !prev);
-    }, 500)
+      setIsShifting((prev) => !prev);
+    }, 500);
 
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBarTime((prev) => prev - 0.8);
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (Status === "gameOver") return;
+    if (barTime * 2 <= 0) {
+      //gameOverSound.play();
+      SetStatus("gameOver");
+    }
+  }, [barTime]);
+
   return (
     <>
-      <Counter score={score} />
+      {Status === "gameOver" && <GameOverMenu />}
+      <div className={`${Status === "gameOver" ? "hidden" : ""}`}>
+        <TimeBar time={barTime} />
+      </div>
+      <div className={`${Status === "gameOver" ? "hidden" : ""}`}>
+        <Counter score={score} />
+      </div>
       <PlayerMovement
         playerPosition={playerPosition}
         lastPosition={lastPostion}
         animationStage={animationStage}
         isShifting={isShifting}
       />
-      <Tree treeBlocks={treeBlocks} />
+
+      <div className="z-10">
+        <Tree treeBlocks={treeBlocks} />
+      </div>
     </>
   );
 };

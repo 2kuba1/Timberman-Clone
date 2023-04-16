@@ -1,44 +1,44 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useState,
-} from "react";
+// import {
+//   createContext,
+//   Dispatch,
+//   ReactNode,
+//   SetStateAction,
+//   useState,
+// } from "react";
 
-export interface PlayerContextInterface {
-  Player: Player;
-  SetPlayer: Dispatch<SetStateAction<Player>>;
-}
+// export interface PlayerContextInterface {
+//   Player: Player;
+//   SetPlayer: Dispatch<SetStateAction<Player>>;
+// }
 
-const defaultState = {
-  Player: {
-    id: "",
-    username: "",
-    score: 0,
-  },
-  SetPlayer: (setPlayer: Player) => {},
-} as PlayerContextInterface;
+// const defaultState = {
+//   Player: {
+//     id: "",
+//     username: "",
+//     score: 0,
+//   },
+//   SetPlayer: (setPlayer: Player) => {},
+// } as PlayerContextInterface;
 
-export const PlayerContext = createContext(defaultState);
+// export const PlayerContext = createContext(defaultState);
 
-type PlayerProviderProps = {
-  children: ReactNode;
-};
+// type PlayerProviderProps = {
+//   children: ReactNode;
+// };
 
-function PlayerProvider({ children }: PlayerProviderProps) {
-  const [player, setPlayer] = useState<Player>(defaultState.Player);
+// function PlayerProvider({ children }: PlayerProviderProps) {
+//   const [player, setPlayer] = useState<Player>(defaultState.Player);
 
-  return (
-    <PlayerContext.Provider
-      value={{
-        Player: player,
-        SetPlayer: setPlayer,
-      }}
-    >
-      {children}
-    </PlayerContext.Provider>
-  );
-}
+//   return (
+//     <PlayerContext.Provider
+//       value={{
+//         Player: player,
+//         SetPlayer: setPlayer,
+//       }}
+//     >
+//       {children}
+//     </PlayerContext.Provider>
+//   );
+// }
 
-export default PlayerProvider;
+// export default PlayerProvider;
