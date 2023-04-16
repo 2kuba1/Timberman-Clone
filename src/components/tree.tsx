@@ -7,7 +7,7 @@ interface Props {
 
 const Tree: FC<Props> = ({ treeBlocks }) => {
   return (
-    <div className="absolute left-1/2 top-[45%] flex h-screen w-screen -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-end">
+    <div className="absolute left-1/2 top-[40%] flex h-screen w-screen -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-end">
       {treeBlocks.map((block, index) => (
         <Image
           src={block}

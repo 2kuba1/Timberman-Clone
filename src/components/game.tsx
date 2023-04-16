@@ -7,7 +7,6 @@ import { GameStatusContext } from "~/contexts/gameStatusContext";
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 import Counter from "./counter";
 import GameOverMenu from "./gameOverMenu";
-import { check } from "prettier";
 import ScreenBtn from "./screenBtn";
 import TimeBar from "./timeBar";
 
@@ -120,48 +119,6 @@ const Game = () => {
 
   useDetectKeyPress("ArrowLeft", handleLeftClick);
   useDetectKeyPress("ArrowRight", handleRightClick);
-
-  useDetectKeyPress("ArrowLeft", () => {
-    setScore((prev) => prev + 1);
-    //playCutSound();
-    setPlayerPosition(1);
-    setLastPostion("justify-start");
-    setTimeout(() => {
-      if (barTime < 200) {
-        setBarTime((prev) => prev + 1);
-      }
-      addLog();
-      setAnimationStage(1);
-      setTimeout(() => {
-        setAnimationStage(2);
-        setTimeout(() => {
-          setAnimationStage(0);
-        }, 100);
-      }, 100);
-    }, 100);
-    SetIsClicked(false);
-  });
-
-  useDetectKeyPress("ArrowRight", () => {
-    setScore((prev) => prev + 1);
-    //playCutSound();
-    setPlayerPosition(2);
-    setLastPostion("justify-end");
-    setTimeout(() => {
-      if (barTime < 200) {
-        setBarTime((prev) => prev + 2);
-      }
-      addLog();
-      setAnimationStage(1);
-      setTimeout(() => {
-        setAnimationStage(2);
-        setTimeout(() => {
-          setAnimationStage(0);
-        }, 100);
-      }, 100);
-    }, 100);
-    SetIsClicked(false);
-  });
 
   useEffect(() => {
     const arr = [];

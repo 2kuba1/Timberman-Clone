@@ -22,7 +22,7 @@ const PlayerMovement: FC<Props> = ({
     <>
       {Status === "playing" && (
         <div
-          className={`relative bottom-7 z-10 flex h-full w-full items-end ${
+          className={`relative bottom-16 z-10 flex h-full w-full items-end ${
             playerPosition === 0
               ? lastPosition
               : playerPosition === 1
