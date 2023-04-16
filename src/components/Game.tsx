@@ -6,9 +6,10 @@ import { ClickContext } from "~/contexts/clickContext";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 import Counter from "./counter";
-import TimeBar from "./timeBar";
 import GameOverMenu from "./gameOverMenu";
 import { check } from "prettier";
+import ScreenBtn from "./screenBtn";
+import TimeBar from "./timeBar";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
@@ -74,6 +75,51 @@ const Game = () => {
       return arr;
     });
   };
+
+  const handleLeftClick = () => {
+    setScore((prev) => prev + 1);
+    //playCutSound();
+    setPlayerPosition(1);
+    setLastPostion("justify-start");
+    setTimeout(() => {
+      if (barTime < 200) {
+        setBarTime((prev) => prev + 1);
+      }
+      addLog();
+      setAnimationStage(1);
+      setTimeout(() => {
+        setAnimationStage(2);
+        setTimeout(() => {
+          setAnimationStage(0);
+        }, 100);
+      }, 100);
+    }, 100);
+    SetIsClicked(false);
+  };
+
+  const handleRightClick = () => {
+    setScore((prev) => prev + 1);
+    //playCutSound();
+    setPlayerPosition(2);
+    setLastPostion("justify-end");
+    setTimeout(() => {
+      if (barTime < 200) {
+        setBarTime((prev) => prev + 2);
+      }
+      addLog();
+      setAnimationStage(1);
+      setTimeout(() => {
+        setAnimationStage(2);
+        setTimeout(() => {
+          setAnimationStage(0);
+        }, 100);
+      }, 100);
+    }, 100);
+    SetIsClicked(false);
+  };
+
+  useDetectKeyPress("ArrowLeft", handleLeftClick);
+  useDetectKeyPress("ArrowRight", handleRightClick);
 
   useDetectKeyPress("ArrowLeft", () => {
     setScore((prev) => prev + 1);
@@ -155,6 +201,10 @@ const Game = () => {
 
   return (
     <>
+      <div className="absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center">
+        <ScreenBtn callback={handleLeftClick} />
+        <ScreenBtn callback={handleRightClick} />
+      </div>
       {Status === "gameOver" && <GameOverMenu />}
       <div className={`${Status === "gameOver" ? "hidden" : ""}`}>
         <TimeBar time={barTime} />
@@ -168,7 +218,6 @@ const Game = () => {
         animationStage={animationStage}
         isShifting={isShifting}
       />
-
       <div className="z-10">
         <Tree treeBlocks={treeBlocks} />
       </div>

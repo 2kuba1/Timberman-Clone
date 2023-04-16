@@ -1,13 +1,13 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import Game from "~/components/game";
 import StartNewGameMenu from "~/components/startNewGameMenu";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 
 const Home: NextPage = () => {
-  const { Status, SetStatus } = useContext(GameStatusContext);
+  const { Status } = useContext(GameStatusContext);
   const [isThemePlaying, setisThemePlaying] = useState(false);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
         {Status === "idle" && <StartNewGameMenu />}
-        {Status !== "idle" && <Game />}
+        {Status === "playing" && <Game />}
       </main>
     </>
   );
