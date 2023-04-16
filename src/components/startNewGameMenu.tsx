@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { useCookies } from "react-cookie";
 import { ClipLoader } from "react-spinners";
-import { ZodError, ZodIssue, z } from "zod";
+import { type ZodIssue, z } from "zod";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import { api } from "~/utils/api";
 
@@ -18,9 +18,12 @@ const StartNewGameMenu = () => {
 
   const addUser = api.scoreboard.createUser.useMutation();
   const getTop3 = api.scoreboard.getTop3.useQuery();
-  const getUsername = api.scoreboard.getUsername.useQuery(cookies.id, {
-    enabled: false,
-  });
+  const getUsername = api.scoreboard.getUsername.useQuery(
+    cookies.id as string,
+    {
+      enabled: false,
+    }
+  );
 
   useEffect(() => {
     const fetch = async () => {
@@ -29,13 +32,11 @@ const StartNewGameMenu = () => {
         setUsername(getUsername.data?.username || "");
       }
     };
-    fetch();
-    console.log(username);
+    fetch().catch(console.error);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!cookies.id) {
       const id = await addUser.mutateAsync(username);
       setCookie("id", id);
@@ -76,7 +77,9 @@ const StartNewGameMenu = () => {
           />
           <form
             className="relative top-16 flex h-1/2 w-full flex-col items-center gap-5"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => {
+              handleSubmit(e).catch(console.error);
+            }}
           >
             <label className="text-3xl font-bold text-menu-yellow">
               Username
