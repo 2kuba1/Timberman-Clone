@@ -1,4 +1,3 @@
-import { isError } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
@@ -6,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { ClipLoader } from "react-spinners";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import { api } from "~/utils/api";
+import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 
 const GameOverMenu = () => {
   const { SetStatus } = useContext(GameStatusContext);
@@ -14,8 +14,10 @@ const GameOverMenu = () => {
 
   const [bestScore, setBestScore] = useState(0);
 
-  const getBestScore = api.scoreboard.getBestScore.useQuery(cookies.id);
+  const getBestScore: any = api.scoreboard.getBestScore.useQuery(cookies.id);
   const updateScore = api.scoreboard.updateScore.useMutation();
+
+  useDetectKeyPress("Enter", () => SetStatus("playing"));
 
   useEffect(() => {
     if (getBestScore.data) {
@@ -63,13 +65,22 @@ const GameOverMenu = () => {
           />
         </motion.div>
       </AnimatePresence>
-      <Image
-        src="/play.png"
-        width={150}
-        height={150}
-        alt="play button"
-        onClick={() => SetStatus("playing")}
-      />
+      <div className='flex flex-col gap-5'>
+        <Image
+          src="/play.png"
+          width={150}
+          height={150}
+          alt="play button"
+          onClick={() => SetStatus("playing")}
+        />
+        <Image
+          src="/home.png"
+          width={150}
+          height={150}
+          alt="back home button"
+          onClick={() => SetStatus("idle")}
+        />
+      </div>
       <AnimatePresence>
         <motion.div initial={{ y: 150 }} animate={{ y: 0 }} exit={{ y: -150 }}>
           <Image

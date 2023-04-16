@@ -6,9 +6,9 @@ import { ClickContext } from "~/contexts/clickContext";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 import Counter from "./counter";
-import GameOverMenu from "./gameOverMenu";
 import ScreenBtn from "./screenBtn";
 import TimeBar from "./timeBar";
+import Image from "next/image";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
@@ -94,7 +94,7 @@ const Game = () => {
         }, 100);
       }, 100);
     }, 100);
-    // SetIsClicked(false);
+    SetIsClicked(false);
   };
 
   const handleRightClick = () => {
@@ -103,7 +103,6 @@ const Game = () => {
     setPlayerPosition(2);
     setLastPostion("justify-end");
     setBarTime((prev) => (timeRef.current < 100 ? prev + 5 : prev));
-    console.log("TIME", timeRef.current);
     setTimeout(() => {
       addLog();
       setAnimationStage(1);
@@ -114,7 +113,7 @@ const Game = () => {
         }, 100);
       }, 100);
     }, 100);
-    // SetIsClicked(false);
+    SetIsClicked(false);
   };
 
   useDetectKeyPress("ArrowLeft", handleLeftClick);
@@ -143,7 +142,6 @@ const Game = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setBarTime((prev) => {
-        console.log(scoreRef.current);
         if (scoreRef.current > 1 && scoreRef.current < 30) {
           return prev - 2;
         } else if (scoreRef.current > 20 && scoreRef.current < 60) {
@@ -192,6 +190,27 @@ const Game = () => {
 
   return (
     <>
+      {score < 1 && (
+        <div className="absolute left-0 top-0 z-[45] flex h-screen w-screen flex-col items-center justify-center gap-5">
+          <div className="relative top-[5%] flex gap-8">
+            <Image
+              width="120"
+              height="100"
+              alt="left arrow die"
+              src="/left.png"
+            />
+
+            <Image
+              width="120"
+              height="100"
+              alt="right arrow die"
+              src="/right.png"
+            />
+          </div>
+          <Image width="50" height="100" alt="or" src="/or.png" className='relative top-[10%]'/>
+          <Image width="200" height="100" alt="click" src="/clic.png" className='relative top-[15%]'/>
+        </div>
+      )}
       <div className="absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center">
         <ScreenBtn callback={handleLeftClick} />
         <ScreenBtn callback={handleRightClick} />
