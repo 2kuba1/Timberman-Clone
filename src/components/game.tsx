@@ -94,7 +94,7 @@ const Game = () => {
         }, 100);
       }, 100);
     }, 100);
-    // SetIsClicked(false);
+    SetIsClicked(false);
   };
 
   const handleRightClick = () => {
@@ -114,7 +114,7 @@ const Game = () => {
         }, 100);
       }, 100);
     }, 100);
-    // SetIsClicked(false);
+    SetIsClicked(false);
   };
 
   useDetectKeyPress("ArrowLeft", handleLeftClick);
