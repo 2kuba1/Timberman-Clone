@@ -83,6 +83,7 @@ const Game = () => {
     setPlayerPosition(1);
     setLastPostion("justify-start");
     setBarTime((prev) => (timeRef.current < 100 ? prev + 5 : prev));
+    setBarTime((prev) => (timeRef.current < 100 ? prev + 3 : prev));
     setTimeout(() => {
       addLog();
       setAnimationStage(1);
@@ -93,7 +94,7 @@ const Game = () => {
         }, 100);
       }, 100);
     }, 100);
-    SetIsClicked(false);
+    // SetIsClicked(false);
   };
 
   const handleRightClick = () => {
@@ -113,7 +114,7 @@ const Game = () => {
         }, 100);
       }, 100);
     }, 100);
-    SetIsClicked(false);
+    // SetIsClicked(false);
   };
 
   useDetectKeyPress("ArrowLeft", handleLeftClick);
@@ -144,29 +145,29 @@ const Game = () => {
       setBarTime((prev) => {
         console.log(scoreRef.current);
         if (scoreRef.current > 1 && scoreRef.current < 30) {
-          return prev - 1;
-        } else if (scoreRef.current > 30 && scoreRef.current < 80) {
-          return prev - 1.1;
-        } else if (scoreRef.current > 80 && scoreRef.current < 150) {
-          return prev - 1.3;
-        } else if (scoreRef.current > 150 && scoreRef.current < 250) {
-          return prev - 1.4;
+          return prev - 2;
+        } else if (scoreRef.current > 20 && scoreRef.current < 60) {
+          return prev - 3;
+        } else if (scoreRef.current > 60 && scoreRef.current < 100) {
+          return prev - 4;
+        } else if (scoreRef.current > 100 && scoreRef.current < 175) {
+          return prev - 4.5;
+        } else if (scoreRef.current > 175 && scoreRef.current < 250) {
+          return prev - 5;
         } else if (scoreRef.current > 250 && scoreRef.current < 350) {
-          return prev - 1.5;
-        } else if (scoreRef.current > 350 && scoreRef.current < 500) {
-          return prev - 1.6;
-        } else if (scoreRef.current > 500 && scoreRef.current < 700) {
-          return prev - 1.7;
-        } else if (scoreRef.current > 700 && scoreRef.current < 900) {
-          return prev - 1.8;
-        } else if (scoreRef.current > 900 && scoreRef.current < 1000) {
-          return prev - 1.9;
-        } else if (scoreRef.current > 1000 && scoreRef.current < 1200) {
-          return prev - 1.2;
-        } else if (scoreRef.current > 1200 && scoreRef.current < 1500) {
-          return prev - 1.21;
+          return prev - 6.5;
+        } else if (scoreRef.current > 350 && scoreRef.current < 450) {
+          return prev - 7;
+        } else if (scoreRef.current > 450 && scoreRef.current < 600) {
+          return prev - 7.5;
+        } else if (scoreRef.current > 600 && scoreRef.current < 800) {
+          return prev - 8;
+        } else if (scoreRef.current > 800 && scoreRef.current < 1000) {
+          return prev - 8.5;
+        } else if (scoreRef.current > 1000 && scoreRef.current < 1500) {
+          return prev - 9;
         } else if (scoreRef.current > 2000) {
-          return prev - 1.22;
+          return prev - 9.5;
         }
         return prev;
       });
