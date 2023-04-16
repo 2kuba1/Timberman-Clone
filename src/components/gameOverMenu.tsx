@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useContext } from "react";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 
@@ -5,16 +6,33 @@ const GameOverMenu = () => {
   const { SetStatus } = useContext(GameStatusContext);
 
   return (
-    <div className="absolute z-[60] flex h-full w-full flex-col items-center justify-center backdrop-blur-sm">
-      <h1 className="text-3xl">You have died</h1>
-      <button
-        onClick={() => {
-          window.location.reload();
-        }}
-        className="h-24 w-3/4 bg-menu-yellow text-2xl text-black"
-      >
-        Play again
-      </button>
+    <div className="absolute z-[60] items-center justify-between flex h-full w-full flex-col backdrop-blur-sm">
+      <div className='absolute flex justify-center top-[38vh] text-2xl'>
+        <h2>{sessionStorage.getItem('score')}</h2>
+      </div>
+      <Image 
+      src='/gameover.png'
+      width={300}
+      height={300}
+      alt='gameover scoreboard'
+      />
+
+      <Image
+      src='/play.png'
+      width={150}
+      height={150}
+      alt='play button'
+      onClick={() => SetStatus('playing')}
+      />
+
+      <Image
+      src='/rip.png'
+      width={150}
+      height={150}
+      alt='rip'
+      className='relative bottom-5'
+      />
+      
     </div>
   );
 };

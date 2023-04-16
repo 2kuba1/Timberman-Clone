@@ -5,6 +5,7 @@ import ReactAudioPlayer from "react-audio-player";
 import Game from "~/components/game";
 import StartNewGameMenu from "~/components/startNewGameMenu";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
+import GameOverMenu from "~/components/gameOverMenu";
 
 const Home: NextPage = () => {
   const { Status } = useContext(GameStatusContext);
@@ -30,7 +31,8 @@ const Home: NextPage = () => {
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
         {Status === "idle" && <StartNewGameMenu />}
-        {Status !== "idle" && <Game />}
+        {Status === "playing" && <Game />}
+        {Status === "gameOver" && <GameOverMenu />}
       </main>
     </>
   );
