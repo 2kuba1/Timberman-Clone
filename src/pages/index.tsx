@@ -30,7 +30,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
         {Status === "idle" && <StartNewGameMenu />}
-        {Status === "playing" && <Game />}
+        {Status !== "idle" && <Game />}
       </main>
     </>
   );
