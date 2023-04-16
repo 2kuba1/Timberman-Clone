@@ -14,12 +14,13 @@ const GameOverMenu = () => {
 
   const [bestScore, setBestScore] = useState(0);
 
-  const getBestScore = api.scoreboard.getBestScore.useQuery(cookies.id);
+  const getBestScore = api.scoreboard.getBestScore.useQuery(
+    cookies.id as string
+  );
   const updateScore = api.scoreboard.updateScore.useMutation();
 
   useEffect(() => {
     if (getBestScore.data) {
-      console.log(getBestScore.data!.score);
       const update = async () => {
         if (
           getBestScore.data!.score < Number(sessionStorage.getItem("score"))
