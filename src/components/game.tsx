@@ -90,9 +90,9 @@ const Game = () => {
         setAnimationStage(2);
         setTimeout(() => {
           setAnimationStage(0);
-        }, 25);
-      }, 25);
-    }, 25);
+        }, 150);
+      }, 150);
+    }, 150);
     SetIsClicked(false);
   };
 
@@ -111,9 +111,9 @@ const Game = () => {
         setAnimationStage(2);
         setTimeout(() => {
           setAnimationStage(0);
-        }, 25);
-      }, 25);
-    }, 25);
+        }, 150);
+      }, 150);
+    }, 150);
     SetIsClicked(false);
   };
 
