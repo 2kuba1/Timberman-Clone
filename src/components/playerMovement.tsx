@@ -31,6 +31,7 @@ const PlayerMovement: FC<Props> = ({
           }`}
         >
           <Image
+            priority={true}
             src={`${
               animationStage === 0
                 ? isShifting
