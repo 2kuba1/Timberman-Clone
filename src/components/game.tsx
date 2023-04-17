@@ -9,6 +9,7 @@ import Counter from "./counter";
 import ScreenBtn from "./screenBtn";
 import TimeBar from "./timeBar";
 import Image from "next/image";
+import ReactAudioPlayer from "react-audio-player";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
@@ -37,20 +38,19 @@ const Game = () => {
   };
 
   useEffect(() => {
-    console.log(Status);
-  }, [Status]);
-
-  useEffect(() => {
-    if (
-      (treeBlocks[treeBlocks.length - 1] === "/branch1.png" &&
-        playerPosition === 1) ||
-      (treeBlocks[treeBlocks.length - 1] === "/branch2.png" &&
-        playerPosition === 2)
-    ) {
-      setScore((prev) => prev - 1);
-      //await gameOverSound.play();
-      SetStatus("gameOver");
-    }
+    const play = async () => {
+      if (
+        (treeBlocks[treeBlocks.length - 1] === "/branch1.png" &&
+          playerPosition === 1) ||
+        (treeBlocks[treeBlocks.length - 1] === "/branch2.png" &&
+          playerPosition === 2)
+      ) {
+        setScore((prev) => prev - 1);
+        await gameOverSound.play();
+        SetStatus("gameOver");
+      }
+    };
+    play().catch((err) => console.log(err));
   }, [IsClicked]);
 
   const newLog = (lastLog: string) => {
@@ -83,7 +83,7 @@ const Game = () => {
 
   const handleLeftClick = () => {
     setScore((prev) => prev + 1);
-    //playCutSound();
+    playCutSound().catch((err) => console.log(err));
     setPlayerPosition(1);
     setLastPostion("justify-start");
     setBarTime((prev) => (timeRef.current < 100 ? prev + 4 : prev));
@@ -103,7 +103,7 @@ const Game = () => {
 
   const handleRightClick = () => {
     setScore((prev) => prev + 1);
-    //playCutSound();
+    playCutSound().catch((err) => console.log(err));
     setPlayerPosition(2);
     setLastPostion("justify-end");
     setBarTime((prev) => (timeRef.current < 100 ? prev + 4 : prev));
@@ -184,7 +184,7 @@ const Game = () => {
     timeRef.current = barTime;
     if (Status === "gameOver") return;
     if (barTime * 2 <= 0) {
-      //gameOverSound.play();
+      gameOverSound.play().catch((err) => console.log(err));
       SetStatus("gameOver");
     }
   }, [barTime]);
@@ -200,6 +200,7 @@ const Game = () => {
         <div className="absolute left-0 top-0 z-[45] flex h-screen w-screen flex-col items-center justify-center gap-5">
           <div className="relative top-[5%] flex gap-8">
             <Image
+              priority={true}
               width="120"
               height="100"
               alt="left arrow die"
@@ -207,6 +208,7 @@ const Game = () => {
             />
 
             <Image
+              priority={true}
               width="120"
               height="100"
               alt="right arrow die"
@@ -214,6 +216,7 @@ const Game = () => {
             />
           </div>
           <Image
+            priority={true}
             width="50"
             height="100"
             alt="or"
@@ -221,6 +224,7 @@ const Game = () => {
             className="relative top-[10%]"
           />
           <Image
+            priority={true}
             width="200"
             height="100"
             alt="click"

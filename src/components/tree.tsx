@@ -10,6 +10,7 @@ const Tree: FC<Props> = ({ treeBlocks }) => {
     <div className="absolute left-1/2 top-[40%] flex h-screen w-screen -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-end">
       {treeBlocks.map((block, index) => (
         <Image
+          priority={true}
           src={block}
           key={index}
           alt="tree trunk"
@@ -19,6 +20,7 @@ const Tree: FC<Props> = ({ treeBlocks }) => {
         />
       ))}
       <Image
+        priority={true}
         className="relative left-[2px] m-0"
         src="/stump.png"
         alt="tree trunk"

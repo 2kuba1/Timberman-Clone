@@ -63,18 +63,22 @@ const GameOverMenu = () => {
       <div className="relative bottom-10 flex h-full flex-col justify-end gap-16">
         <div className="flex flex-col gap-2">
           <Image
+            priority={true}
             src="/play.png"
             width={150}
             height={150}
             alt="play button"
             onClick={() => SetStatus("playing")}
+            className="cursor-pointer"
           />
           <Image
+            priority={true}
             src="/home.png"
             width={150}
             height={150}
             alt="back home button"
             onClick={() => SetStatus("idle")}
+            className="cursor-pointer"
           />
         </div>
         <AnimatePresence>
@@ -84,6 +88,7 @@ const GameOverMenu = () => {
             exit={{ y: -150 }}
           >
             <Image
+              priority={true}
               src="/rip.png"
               width={150}
               height={150}
