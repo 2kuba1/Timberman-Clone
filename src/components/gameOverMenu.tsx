@@ -63,6 +63,7 @@ const GameOverMenu = () => {
       <div className="relative bottom-10 flex h-full flex-col justify-end gap-16">
         <div className="flex flex-col gap-2">
           <Image
+            priority={true}
             src="/play.png"
             width={150}
             height={150}
@@ -71,6 +72,7 @@ const GameOverMenu = () => {
             className="cursor-pointer"
           />
           <Image
+            priority={true}
             src="/home.png"
             width={150}
             height={150}
@@ -86,6 +88,7 @@ const GameOverMenu = () => {
             exit={{ y: -150 }}
           >
             <Image
+              priority={true}
               src="/rip.png"
               width={150}
               height={150}

@@ -196,6 +196,7 @@ const Game = () => {
         <div className="absolute left-0 top-0 z-[45] flex h-screen w-screen flex-col items-center justify-center gap-5">
           <div className="relative top-[5%] flex gap-8">
             <Image
+              priority={true}
               width="120"
               height="100"
               alt="left arrow die"
@@ -203,6 +204,7 @@ const Game = () => {
             />
 
             <Image
+              priority={true}
               width="120"
               height="100"
               alt="right arrow die"
@@ -210,6 +212,7 @@ const Game = () => {
             />
           </div>
           <Image
+            priority={true}
             width="50"
             height="100"
             alt="or"
@@ -217,6 +220,7 @@ const Game = () => {
             className="relative top-[10%]"
           />
           <Image
+            priority={true}
             width="200"
             height="100"
             alt="click"
