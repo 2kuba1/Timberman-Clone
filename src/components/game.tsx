@@ -20,6 +20,8 @@ const Game = () => {
   const [isShifting, setIsShifting] = useState(false);
   const [barTime, setBarTime] = useState(50);
   const [score, setScore] = useState(0);
+  const [isFull, setIsFull] = useState(false);
+
   const scoreRef = useRef(score);
   const timeRef = useRef(barTime);
 
@@ -84,8 +86,8 @@ const Game = () => {
     //playCutSound();
     setPlayerPosition(1);
     setLastPostion("justify-start");
-    setBarTime((prev) => (timeRef.current < 100 ? prev + 5 : prev));
-    setBarTime((prev) => (timeRef.current < 100 ? prev + 3 : prev));
+    setBarTime((prev) => (timeRef.current < 100 ? prev + 4 : prev));
+    setIsFull(timeRef.current >= 100 ? true : false)
     setTimeout(() => {
       addLog();
       setAnimationStage(1);
@@ -104,7 +106,8 @@ const Game = () => {
     //playCutSound();
     setPlayerPosition(2);
     setLastPostion("justify-end");
-    setBarTime((prev) => (timeRef.current < 100 ? prev + 5 : prev));
+    setBarTime((prev) => (timeRef.current < 100 ? prev + 4 : prev));
+    setIsFull(timeRef.current >= 100 ? true : false)
     setTimeout(() => {
       addLog();
       setAnimationStage(1);
@@ -143,6 +146,7 @@ const Game = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      setIsFull(timeRef.current >= 100 ? true : false)
       setBarTime((prev) => {
         if (scoreRef.current > 1 && scoreRef.current < 30) {
           return prev - 2;
@@ -230,7 +234,7 @@ const Game = () => {
         <ScreenBtn callback={handleRightClick} />
       </div>
       <div className={`${Status === "gameOver" ? "hidden" : ""}`}>
-        <TimeBar time={barTime} />
+        <TimeBar isFull={isFull} time={barTime} />
       </div>
       <div className={`${Status === "gameOver" ? "hidden" : ""}`}>
         <Counter score={score} />
