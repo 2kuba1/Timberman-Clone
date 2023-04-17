@@ -68,6 +68,7 @@ const GameOverMenu = () => {
             height={150}
             alt="play button"
             onClick={() => SetStatus("playing")}
+            className="cursor-pointer"
           />
           <Image
             src="/home.png"
@@ -75,6 +76,7 @@ const GameOverMenu = () => {
             height={150}
             alt="back home button"
             onClick={() => SetStatus("idle")}
+            className="cursor-pointer"
           />
         </div>
         <AnimatePresence>

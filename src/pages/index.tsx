@@ -23,7 +23,9 @@ const Home: NextPage = () => {
 
   return (
     <>
-      {isThemePlaying && <ReactAudioPlayer src="theme.mp3" autoPlay loop />}
+      {isThemePlaying && (
+        <ReactAudioPlayer src="theme.mp3" autoPlay loop volume={0.5} />
+      )}
       <Head>
         <title>Timberman</title>
         <meta name="description" content="" />
