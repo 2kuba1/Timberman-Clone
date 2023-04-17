@@ -33,10 +33,17 @@ const StartNewGameMenu = () => {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    let currentDate = new Date();
+    let cookieExpiresDate = new Date();
+    cookieExpiresDate.setDate(currentDate.getDate() + 365);
+
     e.preventDefault();
     if (!cookies.id) {
       const id = await addUser.mutateAsync(username);
-      setCookie("id", id);
+      setCookie("id", id, {
+        path: "/",
+        expires: cookieExpiresDate,
+      });
       const schema = z
         .string()
         .min(3, { message: "Username must contain at least 3 letters" })
