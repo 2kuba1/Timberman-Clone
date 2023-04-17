@@ -26,8 +26,8 @@ const PlayerMovement: FC<Props> = ({
             playerPosition === 0
               ? lastPosition
               : playerPosition === 1
-              ? "justify-start"
-              : "justify-end"
+              ? "justify-start xl:relative xl:right-[-39.5%]"
+              : "justify-end xl:relative xl:left-[-39.5%]"
           }`}
         >
           <Image

@@ -12,7 +12,9 @@ import Image from "next/image";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
-  const [lastPostion, setLastPostion] = useState("justify-start");
+  const [lastPostion, setLastPostion] = useState(
+    "justify-start xl:relative xl:right-[-39.5%]"
+  );
   const [animationStage, setAnimationStage] = useState(0);
   const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
   const [isShifting, setIsShifting] = useState(false);
@@ -207,8 +209,20 @@ const Game = () => {
               src="/right.png"
             />
           </div>
-          <Image width="50" height="100" alt="or" src="/or.png" className='relative top-[10%]'/>
-          <Image width="200" height="100" alt="click" src="/clic.png" className='relative top-[15%]'/>
+          <Image
+            width="50"
+            height="100"
+            alt="or"
+            src="/or.png"
+            className="relative top-[10%]"
+          />
+          <Image
+            width="200"
+            height="100"
+            alt="click"
+            src="/clic.png"
+            className="relative top-[15%]"
+          />
         </div>
       )}
       <div className="absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center">
