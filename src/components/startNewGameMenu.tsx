@@ -70,7 +70,7 @@ const StartNewGameMenu = () => {
           initial={{ y: -1000, opacity: 0 }}
           animate={{ y: isClosing ? -1000 : 0, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring" }}
-          className="flex h-4/5 w-72 flex-col items-center rounded-xl bg-red-900"
+          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900"
         >
           <Image
             src="/timberman_logo.png"
@@ -80,7 +80,7 @@ const StartNewGameMenu = () => {
             className="relative top-5"
           />
           <form
-            className="relative top-16 flex h-1/2 w-full flex-col items-center gap-5"
+            className="relative top-12 flex h-1/2 w-full flex-col items-center gap-5"
             onSubmit={(e) => {
               handleSubmit(e).catch(console.error);
             }}
@@ -107,8 +107,8 @@ const StartNewGameMenu = () => {
               </p>
             )}
             {addUser.isError && (
-              <p className="text-xl">
-                Error status code: {addUser.error.data?.code}
+              <p className="text-center text-sm font-bold">
+                Error status code: {addUser.error.message}
               </p>
             )}
           </form>
