@@ -33,8 +33,8 @@ const StartNewGameMenu = () => {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    let currentDate = new Date();
-    let cookieExpiresDate = new Date();
+    const currentDate = new Date();
+    const cookieExpiresDate = new Date();
     cookieExpiresDate.setDate(currentDate.getDate() + 365);
 
     e.preventDefault();
