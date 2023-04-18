@@ -18,7 +18,7 @@ const timeBar: FC<Props> = ({ time, isFull }) => {
       />
       <div className="justify-start absolute z-50 flex w-[200px] object-left">
         <Image
-          className={`min-h-[35px] object-cover object-left transition ${isFull && 'brightness-125'}`}
+          className={`min-h-[35px] object-cover object-left transition ${isFull ? 'brightness-125' : ''}`}
           src="/time-bar.png"
           alt="time bar"
           width={time * 2}
