@@ -14,17 +14,17 @@ const Tree: FC<Props> = ({ treeBlocks }) => {
           src={block}
           key={index}
           alt="tree trunk"
-          width="350"
+          width="375"
           height="200"
-          className="m-0"
+          className="m-0 lg:w-[400px]"
         />
       ))}
       <Image
         priority={true}
-        className="relative left-[2px] m-0"
+        className="relative left-[2px] m-0 lg:w-[155px]"
         src="/stump.png"
         alt="tree trunk"
-        width="135"
+        width="145"
         height="200"
       />
     </div>

@@ -6,10 +6,16 @@ import Game from "~/components/game";
 import StartNewGameMenu from "~/components/startNewGameMenu";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import GameOverMenu from "~/components/gameOverMenu";
+import useDetectKeyPress from "~/hooks/useDetectKeyPress";
 
 const Home: NextPage = () => {
-  const { Status } = useContext(GameStatusContext);
+  const { Status, SetStatus } = useContext(GameStatusContext);
   const [isThemePlaying, setisThemePlaying] = useState(false);
+
+  useDetectKeyPress("Escape", () => {
+    if(Status === "idle") return;
+    SetStatus("idle")
+  })
 
   useEffect(() => {
     if (Status === "playing") {
