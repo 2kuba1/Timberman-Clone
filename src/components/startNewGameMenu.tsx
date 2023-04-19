@@ -22,6 +22,11 @@ const StartNewGameMenu = () => {
   const getUsername = api.user.getUsername.useQuery(cookies.id as string, {
     enabled: false,
   });
+  const updateUsername = api.user.updateUsername.useMutation({
+    onSuccess: async () => {
+      await getUsername.refetch();
+    },
+  });
 
   useEffect(() => {
     const fetch = async () => {
@@ -58,6 +63,25 @@ const StartNewGameMenu = () => {
       }
     }
 
+    if (username !== getUsername.data?.username && getUsername.data !== null) {
+      const schema = z
+        .string()
+        .min(3, { message: "Username must contain at least 3 letters" })
+        .max(25, { message: "Username must conatin less than 25 letters" });
+
+      const check = await schema.safeParseAsync(username);
+
+      if (!check.success) {
+        setAddUserError(check.error.issues[0]);
+        return;
+      }
+
+      await updateUsername.mutateAsync({
+        id: cookies.id as string,
+        newName: username,
+      });
+    }
+
     setIsClosing(true);
     setTimeout(() => {
       SetStatus("playing");
@@ -92,7 +116,7 @@ const StartNewGameMenu = () => {
             <input
               type="text"
               className="h-10 w-2/3 rounded-xl p-3 text-center font-bold outline-none"
-              value={getUsername.data ? getUsername.data?.username : username}
+              defaultValue={getUsername.data?.username}
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
@@ -116,7 +140,13 @@ const StartNewGameMenu = () => {
           {play && <ReactAudioPlayer src="/menu.mp3" autoPlay />}
           <div className="relative flex w-full flex-col items-center gap-6">
             <Link href="/leaderboard">
-              <Image className='cursor-pointer' src="/btn-score.png" alt="top-3" height="64" width="64" />
+              <Image
+                className="cursor-pointer"
+                src="/btn-score.png"
+                alt="top-3"
+                height="64"
+                width="64"
+              />
             </Link>
             <div className="flex w-full flex-col items-center gap-2 text-center font-bold">
               {getTop3.data?.map((player, index) => (
