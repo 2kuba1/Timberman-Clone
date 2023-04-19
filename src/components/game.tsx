@@ -121,29 +121,25 @@ const Game = () => {
       setIsFull(timeRef.current >= 100 ? true : false);
       setBarTime((prev) => {
         if (scoreRef.current > 1 && scoreRef.current < 30) {
-          return prev - 2;
+          return prev - 1.5;
         } else if (scoreRef.current > 20 && scoreRef.current < 60) {
-          return prev - 3;
+          return prev - 1.75;
         } else if (scoreRef.current > 60 && scoreRef.current < 100) {
-          return prev - 4;
+          return prev - 2;
         } else if (scoreRef.current > 100 && scoreRef.current < 175) {
-          return prev - 4.5;
+          return prev - 2.5;
         } else if (scoreRef.current > 175 && scoreRef.current < 250) {
-          return prev - 5;
+          return prev - 3;
         } else if (scoreRef.current > 250 && scoreRef.current < 350) {
-          return prev - 6.5;
+          return prev - 3.25;
         } else if (scoreRef.current > 350 && scoreRef.current < 450) {
-          return prev - 7;
+          return prev - 3.75;
         } else if (scoreRef.current > 450 && scoreRef.current < 600) {
-          return prev - 7.5;
+          return prev - 4;
         } else if (scoreRef.current > 600 && scoreRef.current < 800) {
-          return prev - 8;
-        } else if (scoreRef.current > 800 && scoreRef.current < 1000) {
-          return prev - 8.5;
-        } else if (scoreRef.current > 1000 && scoreRef.current < 1500) {
-          return prev - 9;
-        } else if (scoreRef.current > 2000) {
-          return prev - 9.5;
+          return prev - 4.25;
+        } else if (scoreRef.current > 800) {
+          return prev - 4.5;
         }
         return prev;
       });
