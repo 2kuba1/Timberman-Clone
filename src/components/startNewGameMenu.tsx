@@ -8,6 +8,7 @@ import { type ZodIssue, z } from "zod";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import { api } from "~/utils/api";
 import Link from "next/link";
+import { BiMedal } from 'react-icons/bi';
 
 const StartNewGameMenu = () => {
   const [play, setPlay] = useState(false);
@@ -150,18 +151,14 @@ const StartNewGameMenu = () => {
             </Link>
             <div className="flex w-full flex-col items-center gap-5 text-center font-bold">
               {getTop3.data?.map((player, index) => (
-                <div className="flex items-center" key={index}>
-                  <span
-                    className={`material-symbols-outlined absolute left-3 ${
+                <div className="flex items-center gap-2" key={index}>
+                  {
                       index === 1
-                        ? "text-menu-silver"
+                        ? <span className='text-menu-gold'><BiMedal /></span>
                         : index === 2
-                        ? "text-menu-copper"
-                        : "text-menu-gold"
-                    }`}
-                  >
-                    workspace_premium
-                  </span>
+                        ? <span className='text-menu-silver'><BiMedal /></span>
+                        : <span className='text-menu-copper'><BiMedal /></span>
+                  }
                   <span
                     className={`text-md w-full rounded-lg p-1 underline ${
                       index === 1
