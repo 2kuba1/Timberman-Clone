@@ -3,7 +3,13 @@ import { type Config } from "tailwindcss";
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontFamily: {
+      display: ["Press Start 2P", "cursive"],
+    },
     extend: {
+      fontFamily: {
+        "press-start": ['"Press Start 2P"', "cursive"],
+      },
       colors: {
         menu: {
           yellow: "#FBB201",

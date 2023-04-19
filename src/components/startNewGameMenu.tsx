@@ -110,7 +110,7 @@ const StartNewGameMenu = () => {
               handleSubmit(e).catch(console.error);
             }}
           >
-            <label className="text-3xl font-bold text-menu-yellow">
+            <label className="text-2xl font-bold text-menu-yellow">
               Username
             </label>
             <input
@@ -148,11 +148,11 @@ const StartNewGameMenu = () => {
                 width="64"
               />
             </Link>
-            <div className="flex w-full flex-col items-center gap-2 text-center font-bold">
+            <div className="flex w-full flex-col items-center gap-5 text-center font-bold">
               {getTop3.data?.map((player, index) => (
                 <div className="flex items-center" key={index}>
                   <span
-                    className={`material-symbols-outlined absolute left-8 ${
+                    className={`material-symbols-outlined absolute left-3 ${
                       index === 1
                         ? "text-menu-silver"
                         : index === 2
@@ -163,7 +163,7 @@ const StartNewGameMenu = () => {
                     workspace_premium
                   </span>
                   <span
-                    className={`w-full rounded-lg p-1 text-xl underline ${
+                    className={`text-md w-full rounded-lg p-1 underline ${
                       index === 1
                         ? "decoration-menu-silver"
                         : index === 2
@@ -171,13 +171,15 @@ const StartNewGameMenu = () => {
                         : "decoration-menu-gold"
                     }`}
                   >
-                    {player.username}
+                    {player.username.length >= 9
+                      ? player.username.substring(0, 9) + "..."
+                      : player.username}
                   </span>
                 </div>
               ))}
               {getTop3.isLoading && <ClipLoader color="#FBB201" size="32px" />}
               {getTop3.isError && (
-                <p className="text-xl">
+                <p className="text-lg">
                   Error status code: {getTop3.error.data?.httpStatus}
                 </p>
               )}

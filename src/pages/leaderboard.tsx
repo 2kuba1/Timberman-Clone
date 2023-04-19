@@ -19,8 +19,6 @@ const Leaderboard = () => {
         )) : (
           <div>no scores yet</div>
         )}
-
-        
       </div>
     </div>
   );
