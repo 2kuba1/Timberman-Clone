@@ -64,9 +64,7 @@ const StartNewGameMenu = () => {
         setAddUserError(check.error.issues[0]);
         return;
       }
-    }
-
-    if (
+    } else if (
       usernameRef.current?.value !== getUsername.data?.username &&
       getUsername.data?.username !== null
     ) {
@@ -101,7 +99,7 @@ const StartNewGameMenu = () => {
           initial={{ y: -1000, opacity: 0 }}
           animate={{ y: isClosing ? -1000 : 0, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring" }}
-          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 lg:h-full"
+          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 xl:h-full 2xl:h-5/6"
         >
           <Image
             src="/timberman_logo.png"
