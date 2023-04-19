@@ -28,8 +28,12 @@
 }
 
 * {
-  overflow: hidden!important;
-  box-sizing: border-box!important;
-  margin: 0!important;
-  padding: 0!important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body {
+  @apply font-press-start;
 }

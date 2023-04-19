@@ -30,6 +30,11 @@ const Home: NextPage = () => {
         <title>Timberman</title>
         <meta name="description" content="" />
         <link rel="shortcut icon" type="image/png" href="/favicon.png" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
         {Status === "idle" && <StartNewGameMenu />}

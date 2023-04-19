@@ -48,13 +48,13 @@ const GameOverMenu = () => {
           initial={{ y: -200 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.5, type: "spring" }}
-          className="relative top-10 flex h-2/5 w-3/4 flex-col items-center justify-center rounded-2xl bg-red-900 xl:w-1/6"
+          className="relative top-10 flex h-2/5 w-3/4 flex-col items-center justify-center gap-3 rounded-2xl bg-red-900 xl:w-1/6"
         >
-          <label className="text-4xl font-bold text-menu-yellow">
+          <label className="text-2xl font-bold text-menu-yellow">
             Best Score
           </label>
           <h2 className="text-3xl font-bold">{bestScore}</h2>
-          <label className="text-4xl font-bold text-menu-yellow">Score</label>
+          <label className="text-2xl font-bold text-menu-yellow">Score</label>
           <h2 className="text-3xl font-bold">
             {sessionStorage.getItem("score")}
           </h2>
