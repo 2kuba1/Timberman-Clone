@@ -48,7 +48,7 @@ const StartNewGameMenu = () => {
 
     e.preventDefault();
     if (!cookies.id) {
-      const id = await addUser.mutateAsync(username);
+      const id = await addUser.mutateAsync(usernameRef.current!.value);
       setCookie("id", id, {
         path: "/",
         expires: cookieExpiresDate,
@@ -57,7 +57,7 @@ const StartNewGameMenu = () => {
         .string()
         .min(3, { message: "Username must contain at least 3 letters" })
         .max(25, { message: "Username must conatin less than 25 letters" });
-      const check = await schema.safeParseAsync(username);
+      const check = await schema.safeParseAsync(usernameRef.current?.value);
 
       if (!check.success) {
         console.log(check.error);
@@ -75,7 +75,7 @@ const StartNewGameMenu = () => {
         .min(3, { message: "Username must contain at least 3 letters" })
         .max(25, { message: "Username must conatin less than 25 letters" });
 
-      const check = await schema.safeParseAsync(username);
+      const check = await schema.safeParseAsync(usernameRef.current?.value);
 
       if (!check.success) {
         setAddUserError(check.error.issues[0]);
@@ -84,7 +84,7 @@ const StartNewGameMenu = () => {
 
       await updateUsername.mutateAsync({
         id: cookies.id as string,
-        newName: username,
+        newName: usernameRef.current!.value,
       });
     }
 
@@ -101,7 +101,7 @@ const StartNewGameMenu = () => {
           initial={{ y: -1000, opacity: 0 }}
           animate={{ y: isClosing ? -1000 : 0, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring" }}
-          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900"
+          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 lg:h-full"
         >
           <Image
             src="/timberman_logo.png"
@@ -122,9 +122,7 @@ const StartNewGameMenu = () => {
             <input
               type="text"
               className="h-10 w-2/3 rounded-xl p-3 text-center font-bold outline-none"
-              defaultValue={
-                getUsername.data ? getUsername.data.username : username
-              }
+              defaultValue={getUsername.data?.username}
               ref={usernameRef}
               onChange={(e) => setUsername(e.target.value)}
             />
