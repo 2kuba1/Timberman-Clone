@@ -29,6 +29,8 @@ const StartNewGameMenu = () => {
     },
   });
 
+  const usernameRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const fetch = async () => {
       if (cookies.id) {
@@ -64,7 +66,10 @@ const StartNewGameMenu = () => {
       }
     }
 
-    if (username !== getUsername.data?.username && getUsername.data !== null) {
+    if (
+      usernameRef.current?.value !== getUsername.data?.username &&
+      getUsername.data?.username !== null
+    ) {
       const schema = z
         .string()
         .min(3, { message: "Username must contain at least 3 letters" })
@@ -117,7 +122,10 @@ const StartNewGameMenu = () => {
             <input
               type="text"
               className="h-10 w-2/3 rounded-xl p-3 text-center font-bold outline-none"
-              defaultValue={getUsername.data?.username}
+              defaultValue={
+                getUsername.data ? getUsername.data.username : username
+              }
+              ref={usernameRef}
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
