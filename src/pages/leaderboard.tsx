@@ -6,7 +6,9 @@ import { TfiCup } from "react-icons/tfi";
 import { ClipLoader } from "react-spinners";
 
 const Leaderboard = () => {
-  const { data: scores } = api.scoreboard.getAllScores.useQuery();
+  const { data: scores } = api.scoreboard.getAllScores.useQuery(undefined, {
+    refetchInterval: 3000,
+  });
 
   return (
     <>
@@ -21,13 +23,12 @@ const Leaderboard = () => {
         />
       </Head>
       <div className='flex h-screen w-screen items-center gap-5 overflow-y-auto bg-[url("/background.png")] bg-cover text-xl font-bold lg:bg-contain lg:text-2xl '>
-        <div></div>
-        <div className="relative top-5 flex h-full w-full flex-col items-center gap-5">
+        <div className="flex h-full w-full flex-wrap items-center justify-center gap-5">
           {scores && scores.length > 0 ? (
             scores?.map((score, index) => (
               <div
                 key={index}
-                className="flex h-28 w-4/5 flex-wrap items-center justify-between rounded-md bg-white "
+                className="flex h-10 w-2/5 flex-wrap items-center justify-between rounded-md bg-white "
               >
                 <div className="relative left-5 flex items-center gap-3 text-sm">
                   <div className="flex items-center gap-1 text-xl">

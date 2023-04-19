@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -12,7 +12,7 @@ datasource db {
 }
 
 model Scoreboard {
-    id       String @id @default(cuid())
-    username String
-    score    Int
+  id       String @id @default(cuid())
+  username String
+  score    Int
 }

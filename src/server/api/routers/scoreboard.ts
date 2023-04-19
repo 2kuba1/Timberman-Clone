@@ -36,7 +36,11 @@ export const scoreboardRouter = createTRPCRouter({
     return top3;
   }),
   getAllScores: publicProcedure.query(async ({ ctx }) => {
-    const scores = await ctx.prisma.scoreboard.findMany();
+    const scores = await ctx.prisma.scoreboard.findMany({
+      orderBy: {
+        score: "desc",
+      },
+    });
     return scores;
   }),
 });
