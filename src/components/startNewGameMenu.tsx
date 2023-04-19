@@ -8,7 +8,7 @@ import { type ZodIssue, z } from "zod";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import { api } from "~/utils/api";
 import Link from "next/link";
-import { BiMedal } from 'react-icons/bi';
+import { BiMedal } from "react-icons/bi";
 
 const StartNewGameMenu = () => {
   const [play, setPlay] = useState(false);
@@ -137,6 +137,9 @@ const StartNewGameMenu = () => {
                 Error status code: {addUser.error.message}
               </p>
             )}
+            {updateUsername.isLoading && (
+              <ClipLoader size="32px" color="white" />
+            )}
           </form>
           {play && <ReactAudioPlayer src="/menu.mp3" autoPlay />}
           <div className="relative flex w-full flex-col items-center gap-6">
@@ -152,13 +155,19 @@ const StartNewGameMenu = () => {
             <div className="flex w-full flex-col items-center gap-5 text-center font-bold">
               {getTop3.data?.map((player, index) => (
                 <div className="flex items-center gap-2" key={index}>
-                  {
-                      index === 1
-                        ? <span className='text-menu-gold'><BiMedal /></span>
-                        : index === 2
-                        ? <span className='text-menu-silver'><BiMedal /></span>
-                        : <span className='text-menu-copper'><BiMedal /></span>
-                  }
+                  {index === 1 ? (
+                    <span className="text-menu-gold">
+                      <BiMedal />
+                    </span>
+                  ) : index === 2 ? (
+                    <span className="text-menu-silver">
+                      <BiMedal />
+                    </span>
+                  ) : (
+                    <span className="text-menu-copper">
+                      <BiMedal />
+                    </span>
+                  )}
                   <span
                     className={`text-md w-full rounded-lg p-1 underline ${
                       index === 1
