@@ -7,6 +7,7 @@ import { ClipLoader } from "react-spinners";
 import { type ZodIssue, z } from "zod";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
 import { api } from "~/utils/api";
+import Link from "next/link";
 
 const StartNewGameMenu = () => {
   const [play, setPlay] = useState(false);
@@ -114,7 +115,9 @@ const StartNewGameMenu = () => {
           </form>
           {play && <ReactAudioPlayer src="/menu.mp3" autoPlay />}
           <div className="relative flex w-full flex-col items-center gap-6">
-            <Image src="/btn-score.png" alt="top-3" height="64" width="64" />
+            <Link href="/leaderboard">
+              <Image className='cursor-pointer' src="/btn-score.png" alt="top-3" height="64" width="64" />
+            </Link>
             <div className="flex w-full flex-col items-center gap-2 text-center font-bold">
               {getTop3.data?.map((player, index) => (
                 <div className="flex items-center" key={index}>

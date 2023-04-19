@@ -1,6 +1,6 @@
 import PlayerMovement from "./playerMovement";
 import Tree from "./tree";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useContext } from "react";
 import { ClickContext } from "~/contexts/clickContext";
 import { GameStatusContext } from "~/contexts/gameStatusContext";
@@ -10,6 +10,7 @@ import ScreenBtn from "./screenBtn";
 import TimeBar from "./timeBar";
 import Image from "next/image";
 import ReactAudioPlayer from "react-audio-player";
+import { generateTree, createLog } from "~/utils/tree";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // 0 = standing, 1 =  left, 2  = right
@@ -17,7 +18,7 @@ const Game = () => {
     "justify-start xl:relative xl:right-[-39.5%]"
   );
   const [animationStage, setAnimationStage] = useState(0);
-  const [treeBlocks, setTreeBlocks] = useState<string[]>([]);
+  const [treeBlocks, setTreeBlocks] = useState<string[]>(generateTree(8));
   const [isShifting, setIsShifting] = useState(false);
   const [barTime, setBarTime] = useState(50);
   const [score, setScore] = useState(0);
@@ -29,8 +30,8 @@ const Game = () => {
   const { Status, SetStatus } = useContext(GameStatusContext);
   const { IsClicked, SetIsClicked } = useContext(ClickContext);
 
-  const gameOverSound = new Audio("/death.mp3");
-  const cutSound = new Audio("/cut.mp3");
+  const cutSound = useMemo(() => new Audio("/cut.mp3"), []);
+  const gameOverSound = useMemo(() => new Audio("/death.mp3"), []);
 
   const playCutSound = async () => {
     cutSound.currentTime = 0;
@@ -53,29 +54,12 @@ const Game = () => {
     play().catch((err) => console.log(err));
   }, [IsClicked]);
 
-  const newLog = (lastLog: string) => {
-    let src = "";
-    if (lastLog === "/branch1.png" || lastLog === "/branch2.png") {
-      return "/trunk1.png";
-    }
-    if (Math.random() * 4 <= 1) {
-      src = Math.random() > 0.5 ? "/trunk1.png" : "/trunk2.png";
-    } else {
-      if (Math.random() > 0.5) {
-        src = "/branch1.png";
-      } else {
-        src = "/branch2.png";
-      }
-    }
-    return src;
-  };
-
   const addLog = () => {
     SetIsClicked(true);
     setTreeBlocks((prev) => {
       const arr = [...prev];
       const lastLog = arr[0];
-      arr.unshift(newLog(lastLog as string));
+      arr.unshift(createLog(lastLog as string));
       arr.pop();
       return arr;
     });
@@ -87,7 +71,7 @@ const Game = () => {
     setPlayerPosition(1);
     setLastPostion("justify-start");
     setBarTime((prev) => (timeRef.current < 100 ? prev + 4 : prev));
-    setIsFull(timeRef.current >= 100 ? true : false)
+    setIsFull(timeRef.current >= 100 ? true : false);
     setTimeout(() => {
       addLog();
       setAnimationStage(1);
@@ -107,7 +91,7 @@ const Game = () => {
     setPlayerPosition(2);
     setLastPostion("justify-end");
     setBarTime((prev) => (timeRef.current < 100 ? prev + 4 : prev));
-    setIsFull(timeRef.current >= 100 ? true : false)
+    setIsFull(timeRef.current >= 100 ? true : false);
     setTimeout(() => {
       addLog();
       setAnimationStage(1);
@@ -125,18 +109,6 @@ const Game = () => {
   useDetectKeyPress("ArrowRight", handleRightClick);
 
   useEffect(() => {
-    const arr = [];
-    let prevLog = "/trunk1.png";
-    for (let i = 0; i < 8; i++) {
-      const log = newLog(prevLog);
-      arr.push(log);
-      prevLog = log;
-    }
-
-    setTreeBlocks([...arr, "/trunk1.png"]);
-  }, []);
-
-  useEffect(() => {
     const interval = setInterval(() => {
       setIsShifting((prev) => !prev);
     }, 500);
@@ -146,7 +118,7 @@ const Game = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsFull(timeRef.current >= 100 ? true : false)
+      setIsFull(timeRef.current >= 100 ? true : false);
       setBarTime((prev) => {
         if (scoreRef.current > 1 && scoreRef.current < 30) {
           return prev - 2;
