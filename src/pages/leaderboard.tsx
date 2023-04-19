@@ -22,7 +22,7 @@ const Leaderboard = () => {
           rel="stylesheet"
         />
       </Head>
-      <div className='flex h-screen w-screen items-center gap-5 overflow-y-auto bg-[url("/background.png")] bg-cover text-xl font-bold lg:bg-contain lg:text-2xl '>
+      <div className='flex h-screen w-screen items-center gap-5 overflow-y-auto bg-[url("/background.png")] bg-cover p-5 text-xl font-bold lg:bg-contain lg:text-2xl'>
         <div className="flex h-full w-full flex-wrap items-center justify-center gap-5">
           {scores && scores.length > 0 ? (
             scores?.map((score, index) => (
