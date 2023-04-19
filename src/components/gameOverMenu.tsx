@@ -48,20 +48,26 @@ const GameOverMenu = () => {
           initial={{ y: -200 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.5, type: "spring" }}
-          className="relative top-10 flex h-2/5 w-3/4 flex-col items-center justify-center gap-3 rounded-2xl  bg-red-900 xl:w-1/6"
+          className="relative top-10 flex h-2/5 w-3/4 flex-col items-center justify-center gap-5 rounded-2xl bg-white xl:w-1/6"
         >
-          <label className="text-2xl font-bold text-menu-yellow xl:text-base 2xl:text-2xl">
+          <div className='flex items-center align-center flex-col'>
+          <label className="text-xl font-bold text-gray-500 xl:text-md">
             Best Score
           </label>
-          <h2 className="text-3xl font-bold xl:text-xl 2xl:text-3xl">
+          <h2 className="text-2xl font-bold xl:text-xl 2xl:text-3xl">
             {bestScore}
           </h2>
-          <label className="text-2xl font-bold text-menu-yellow xl:text-base 2xl:text-2xl">
+            
+          </div>
+          <div className='flex items-center align-center flex-col'>
+
+          <label className="text-xl font-bold text-gray-500 xl:text-md">
             Score
           </label>
-          <h2 className="text-3xl font-bold xl:text-xl 2xl:text-3xl">
+          <h2 className="text-2xl font-bold xl:text-xl 2xl:text-3xl">
             {sessionStorage.getItem("score")}
           </h2>
+          </div>
         </motion.div>
       </AnimatePresence>
       <div className="relative bottom-10 flex h-full flex-col justify-end gap-16">

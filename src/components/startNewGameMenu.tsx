@@ -100,7 +100,7 @@ const StartNewGameMenu = () => {
           initial={{ y: -1000, opacity: 0 }}
           animate={{ y: isClosing ? -1000 : 0, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring" }}
-          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 xl:h-full 2xl:h-5/6"
+          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 xl:h-full 2xl:h-5/6 p-5"
         >
           <Image
             src="/timberman_logo.png"
@@ -115,7 +115,7 @@ const StartNewGameMenu = () => {
               handleSubmit(e).catch(console.error);
             }}
           >
-            <label className="text-2xl font-bold text-menu-yellow">
+            <label className="text-xl font-bold text-menu-yellow">
               Username
             </label>
             <input
@@ -127,7 +127,7 @@ const StartNewGameMenu = () => {
             />
             <input
               type="submit"
-              value="Start"
+              value="start"
               className="h-10 w-2/3 cursor-pointer rounded-xl bg-menu-yellow font-bold text-red-900 duration-100 active:scale-110 active:bg-menu-copper"
               onClick={() => setPlay(true)}
             />
@@ -150,7 +150,7 @@ const StartNewGameMenu = () => {
           <div className="relative flex w-full flex-col items-center gap-6">
             <Link href="/leaderboard">
               <Image
-                className="cursor-pointer"
+                className="cursor-pointer hover:scale-110 transition duration-75"
                 src="/btn-score.png"
                 alt="top-3"
                 height="64"
@@ -161,15 +161,15 @@ const StartNewGameMenu = () => {
               {getTop3.data?.map((player: Player, index) => (
                 <div className="flex items-center gap-2" key={index}>
                   {index === 1 ? (
-                    <span className="text-menu-gold">
+                    <span className="text-menu-gold text-2xl">
                       <BiMedal />
                     </span>
                   ) : index === 2 ? (
-                    <span className="text-menu-silver">
+                    <span className="text-menu-silver text-2xl">
                       <BiMedal />
                     </span>
                   ) : (
-                    <span className="text-menu-copper">
+                    <span className="text-menu-copper text-2xl">
                       <BiMedal />
                     </span>
                   )}
@@ -182,9 +182,11 @@ const StartNewGameMenu = () => {
                         : "decoration-menu-gold"
                     }`}
                   >
+                    <span className='text-md'>
                     {player.username.length >= 9
                       ? player.username.substring(0, 9) + "..."
                       : player.username}
+                    </span>
                   </span>
                 </div>
               ))}
