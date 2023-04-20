@@ -173,7 +173,7 @@ const StartNewGameMenu = () => {
                     </span>
                   )}
                   <span
-                    className={`text-md w-full rounded-lg p-1 underline ${
+                    className={`text-md w-full rounded-lg p-1 text-slate-200 underline ${
                       index === 1
                         ? "decoration-menu-silver"
                         : index === 2
