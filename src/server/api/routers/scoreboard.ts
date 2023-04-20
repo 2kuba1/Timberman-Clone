@@ -4,9 +4,6 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const scoreboardRouter = createTRPCRouter({
-  onSocre: publicProcedure.subscription(() => {
-    return;
-  }),
   getBestScore: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     const best = ctx.prisma.scoreboard.findFirst({
       where: {
