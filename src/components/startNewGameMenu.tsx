@@ -29,6 +29,8 @@ const StartNewGameMenu = () => {
     },
   });
 
+  const usernameRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const fetch = async () => {
       if (cookies.id) {
@@ -46,7 +48,7 @@ const StartNewGameMenu = () => {
 
     e.preventDefault();
     if (!cookies.id) {
-      const id = await addUser.mutateAsync(username);
+      const id = await addUser.mutateAsync(usernameRef.current!.value);
       setCookie("id", id, {
         path: "/",
         expires: cookieExpiresDate,
@@ -55,22 +57,23 @@ const StartNewGameMenu = () => {
         .string()
         .min(3, { message: "Username must contain at least 3 letters" })
         .max(25, { message: "Username must conatin less than 25 letters" });
-      const check = await schema.safeParseAsync(username);
+      const check = await schema.safeParseAsync(usernameRef.current?.value);
 
       if (!check.success) {
         console.log(check.error);
         setAddUserError(check.error.issues[0]);
         return;
       }
-    }
-
-    if (username !== getUsername.data?.username && getUsername.data !== null) {
+    } else if (
+      usernameRef.current?.value !== getUsername.data?.username &&
+      getUsername.data?.username !== null
+    ) {
       const schema = z
         .string()
         .min(3, { message: "Username must contain at least 3 letters" })
         .max(25, { message: "Username must conatin less than 25 letters" });
 
-      const check = await schema.safeParseAsync(username);
+      const check = await schema.safeParseAsync(usernameRef.current?.value);
 
       if (!check.success) {
         setAddUserError(check.error.issues[0]);
@@ -79,7 +82,7 @@ const StartNewGameMenu = () => {
 
       await updateUsername.mutateAsync({
         id: cookies.id as string,
-        newName: username,
+        newName: usernameRef.current!.value,
       });
     }
 
@@ -96,7 +99,7 @@ const StartNewGameMenu = () => {
           initial={{ y: -1000, opacity: 0 }}
           animate={{ y: isClosing ? -1000 : 0, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring" }}
-          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900"
+          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 xl:h-full 2xl:h-5/6"
         >
           <Image
             src="/timberman_logo.png"
@@ -118,6 +121,7 @@ const StartNewGameMenu = () => {
               type="text"
               className="h-10 w-2/3 rounded-xl p-3 text-center font-bold outline-none"
               defaultValue={getUsername.data?.username}
+              ref={usernameRef}
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
@@ -156,20 +160,20 @@ const StartNewGameMenu = () => {
               {getTop3.data?.map((player, index) => (
                 <div className="flex items-center gap-2" key={index}>
                   {index === 1 ? (
-                    <span className="text-menu-gold">
-                      <BiMedal />
-                    </span>
-                  ) : index === 2 ? (
                     <span className="text-menu-silver">
                       <BiMedal />
                     </span>
-                  ) : (
+                  ) : index === 2 ? (
                     <span className="text-menu-copper">
+                      <BiMedal />
+                    </span>
+                  ) : (
+                    <span className="text-menu-gold">
                       <BiMedal />
                     </span>
                   )}
                   <span
-                    className={`text-md w-full rounded-lg p-1 underline ${
+                    className={`text-md w-full rounded-lg p-1 text-slate-200 underline ${
                       index === 1
                         ? "decoration-menu-silver"
                         : index === 2

@@ -48,20 +48,24 @@ const GameOverMenu = () => {
           initial={{ y: -200 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.5, type: "spring" }}
-          className="relative top-10 flex h-2/5 w-3/4 flex-col items-center justify-center gap-3 rounded-2xl bg-red-900 xl:w-1/6"
+          className="relative top-10 flex h-2/5 w-3/4 flex-col items-center justify-center gap-3 rounded-2xl  bg-red-900 xl:w-1/6"
         >
-          <label className="text-2xl font-bold text-menu-yellow">
+          <label className="text-2xl font-bold text-menu-yellow xl:text-base 2xl:text-2xl">
             Best Score
           </label>
-          <h2 className="text-3xl font-bold">{bestScore}</h2>
-          <label className="text-2xl font-bold text-menu-yellow">Score</label>
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-3xl font-bold xl:text-xl 2xl:text-3xl">
+            {bestScore}
+          </h2>
+          <label className="text-2xl font-bold text-menu-yellow xl:text-base 2xl:text-2xl">
+            Score
+          </label>
+          <h2 className="text-3xl font-bold xl:text-xl 2xl:text-3xl">
             {sessionStorage.getItem("score")}
           </h2>
         </motion.div>
       </AnimatePresence>
       <div className="relative bottom-10 flex h-full flex-col justify-end gap-16">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 xl:h-24 2xl:h-auto">
           <Image
             priority={true}
             src="/play.png"
@@ -93,7 +97,7 @@ const GameOverMenu = () => {
               width={150}
               height={150}
               alt="rip"
-              className="relative bottom-8 "
+              className="relative bottom-8 xl:-bottom-4 2xl:bottom-8"
             />
           </motion.div>
         </AnimatePresence>
