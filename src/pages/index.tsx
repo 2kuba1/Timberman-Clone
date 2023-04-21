@@ -46,7 +46,7 @@ const Home: NextPage = () => {
         {Status === "idle" && (
           <>
             <a
-              className="z-50 absolute lg:w-[30%] text-[10px] h-[10px] lg:text-sm bottom-5 text-center text-sm text-white opacity-50 hover:opacity-100 lg:bottom-5 lg:right-5 w-screen hover:underline"
+              className="absolute bottom-5 z-50 h-[10px] w-screen text-center text-[10px] text-sm text-white opacity-50 hover:underline hover:opacity-100 lg:bottom-5 lg:right-5 lg:w-[30%] lg:text-sm"
               href="https://github.com/2kuba1/Timberman-School-Open-Days"
             >
               by Jakub Wojtyna & Paweł Cyrzyk

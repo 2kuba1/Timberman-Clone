@@ -41,11 +41,19 @@ const StartNewGameMenu = () => {
     fetch().catch(console.error);
   }, []);
 
+  useEffect(() => {
+    if (cookies.id) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 5 * 60 * 1000);
+    }
+  }, [cookies]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const currentDate = new Date();
     const cookieExpiresDate = new Date();
     cookieExpiresDate.setDate(currentDate.getDate() + 365);
-    
+
     e.preventDefault();
     if (!cookies.id) {
       const id = await addUser.mutateAsync(usernameRef.current!.value);
@@ -99,7 +107,7 @@ const StartNewGameMenu = () => {
           initial={{ y: -1000, opacity: 0 }}
           animate={{ y: isClosing ? -1000 : 0, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring" }}
-          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 xl:h-full 2xl:h-5/6 p-8"
+          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 p-8 xl:h-full 2xl:h-5/6"
         >
           <Image
             src="/timberman_logo.png"
@@ -160,15 +168,15 @@ const StartNewGameMenu = () => {
               {getTop3.data?.map((player, index) => (
                 <div className="flex items-center gap-2" key={index}>
                   {index === 1 ? (
-                    <span className="text-menu-silver text-2xl">
+                    <span className="text-2xl text-menu-silver">
                       <BiMedal />
                     </span>
                   ) : index === 2 ? (
-                    <span className="text-menu-copper text-2xl">
+                    <span className="text-2xl text-menu-copper">
                       <BiMedal />
                     </span>
                   ) : (
-                    <span className="text-menu-gold text-2xl">
+                    <span className="text-2xl text-menu-gold">
                       <BiMedal />
                     </span>
                   )}
