@@ -9,7 +9,6 @@ import { GameStatusContext } from "~/contexts/gameStatusContext";
 import { api } from "~/utils/api";
 import Link from "next/link";
 import { BiMedal } from "react-icons/bi";
-import type { Player } from "~/types/player";
 
 const StartNewGameMenu = () => {
   const [play, setPlay] = useState(false);
@@ -43,9 +42,8 @@ const StartNewGameMenu = () => {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const currentDate = new Date();
     const cookieExpiresDate = new Date();
-    cookieExpiresDate.setDate(currentDate.getDate() + 365);
+    cookieExpiresDate.setTime(cookieExpiresDate.getTime() + 5 * 60 * 1000);
 
     e.preventDefault();
     if (!cookies.id) {
@@ -100,7 +98,7 @@ const StartNewGameMenu = () => {
           initial={{ y: -1000, opacity: 0 }}
           animate={{ y: isClosing ? -1000 : 0, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring" }}
-          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 xl:h-full 2xl:h-5/6 p-5"
+          className="flex h-5/6 w-72 flex-col items-center rounded-xl bg-red-900 xl:h-full 2xl:h-5/6 p-8"
         >
           <Image
             src="/timberman_logo.png"
@@ -115,7 +113,7 @@ const StartNewGameMenu = () => {
               handleSubmit(e).catch(console.error);
             }}
           >
-            <label className="text-xl font-bold text-menu-yellow">
+            <label className="text-2xl font-bold text-menu-yellow">
               Username
             </label>
             <input
@@ -150,7 +148,7 @@ const StartNewGameMenu = () => {
           <div className="relative flex w-full flex-col items-center gap-6">
             <Link href="/leaderboard">
               <Image
-                className="cursor-pointer hover:scale-110 transition duration-75"
+                className="cursor-pointer"
                 src="/btn-score.png"
                 alt="top-3"
                 height="64"
@@ -158,23 +156,23 @@ const StartNewGameMenu = () => {
               />
             </Link>
             <div className="flex w-full flex-col items-center gap-5 text-center font-bold">
-              {getTop3.data?.map((player: Player, index) => (
+              {getTop3.data?.map((player, index) => (
                 <div className="flex items-center gap-2" key={index}>
                   {index === 1 ? (
-                    <span className="text-menu-gold text-2xl">
+                    <span className="text-menu-silver">
                       <BiMedal />
                     </span>
                   ) : index === 2 ? (
-                    <span className="text-menu-silver text-2xl">
+                    <span className="text-menu-copper">
                       <BiMedal />
                     </span>
                   ) : (
-                    <span className="text-menu-copper text-2xl">
+                    <span className="text-menu-gold">
                       <BiMedal />
                     </span>
                   )}
                   <span
-                    className={`text-md w-full rounded-lg p-1 underline ${
+                    className={`text-md w-full rounded-lg p-1 text-slate-200 underline ${
                       index === 1
                         ? "decoration-menu-silver"
                         : index === 2
@@ -182,11 +180,9 @@ const StartNewGameMenu = () => {
                         : "decoration-menu-gold"
                     }`}
                   >
-                    <span className='text-md'>
                     {player.username.length >= 9
                       ? player.username.substring(0, 9) + "..."
                       : player.username}
-                    </span>
                   </span>
                 </div>
               ))}

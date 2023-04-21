@@ -19,6 +19,7 @@ const GameOverMenu = () => {
   const updateScore = api.scoreboard.updateScore.useMutation();
 
   useDetectKeyPress("Enter", () => SetStatus("playing"));
+  useDetectKeyPress("Escape", () => SetStatus("idle"));
 
   useEffect(() => {
     if (getBestScore.data) {
@@ -48,10 +49,10 @@ const GameOverMenu = () => {
           initial={{ y: -200 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.5, type: "spring" }}
-          className="relative top-10 flex h-2/5 w-3/4 flex-col items-center justify-center gap-5 rounded-2xl bg-white xl:w-1/6"
+          className="relative top-10 flex h-2/5 w-3/4 flex-col items-center justify-center gap-5 rounded-2xl bg-red-900 xl:w-1/6"
         >
           <div className='flex items-center align-center flex-col'>
-          <label className="text-xl font-bold text-gray-500 xl:text-md">
+          <label className="text-xl font-bold text-menu-gold xl:text-md">
             Best Score
           </label>
           <h2 className="text-2xl font-bold xl:text-xl 2xl:text-3xl">
@@ -61,7 +62,7 @@ const GameOverMenu = () => {
           </div>
           <div className='flex items-center align-center flex-col'>
 
-          <label className="text-xl font-bold text-gray-500 xl:text-md">
+          <label className="text-xl font-bold text-menu-gold xl:text-md">
             Score
           </label>
           <h2 className="text-2xl font-bold xl:text-xl 2xl:text-3xl">

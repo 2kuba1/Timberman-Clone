@@ -7,11 +7,18 @@ import { ClipLoader } from "react-spinners";
 import type { Player } from "~/types/player";
 import Image from 'next/image';
 import Link from 'next/link';
+import useDetectKeyPress from "~/hooks/useDetectKeyPress";
+import { useContext } from 'react';
+import { GameStatusContext } from "~/contexts/gameStatusContext";
 
 const Leaderboard = () => {
   const { data: players} = api.scoreboard.getAllScores.useQuery(undefined, {
     refetchInterval: 3000,
   });
+
+  const { SetStatus } = useContext(GameStatusContext);
+
+  useDetectKeyPress("Escape", () => { SetStatus("idle") });
 
   return (
     <>
@@ -29,8 +36,8 @@ const Leaderboard = () => {
         <Link href='/'>
       <Image className='fixed top-5 left-5' alt='back to homepage button' src='/home.png' width='100' height='100'/>
         </Link>
-        <div className="flex min-h-[90%] max-h-[90%] w-full flex-wrap items-center justify-center gap-5 overflow-y-scroll">
-          <div className='h-10 mb-3 relative top-10 text-sm px-10 flex lg:w-3/5 w-[100%] text-white justify-around'>
+        <div className="lg:grid-cols-2 flex min-h-[90%] max-h-[90%] w-full flex-wrap items-center justify-center gap-5 overflow-y-scroll">
+          <div className='lg:hidden h-10 mb-3 relative top-10 text-sm px-10 flex lg:w-3/5 w-[100%] text-white justify-around'>
           <div>nick</div>
           <div>|</div>
           <div>best score</div>
@@ -39,7 +46,7 @@ const Leaderboard = () => {
             players?.map((player: Player, index: number) => (
               <div
                 key={index}
-                className="flex h-16 lg:w-3/5 w-[100%] flex-wrap items-center justify-between rounded-md bg-white"
+                className="flex h-16 lg:w-[45%] w-[100%] flex-wrap items-center justify-between rounded-md bg-white"
               >
                 <div className="relative left-2 lg:left-5 flex items-center gap-3 text-sm">
                   <div className="flex items-center gap-1 text-xl">

@@ -13,9 +13,9 @@ const Home: NextPage = () => {
   const [isThemePlaying, setisThemePlaying] = useState(false);
 
   useDetectKeyPress("Escape", () => {
-    if(Status === "idle") return;
-    SetStatus("idle")
-  })
+    if (Status === "idle") return;
+    SetStatus("idle");
+  });
 
   useEffect(() => {
     if (Status === "playing") {
@@ -43,7 +43,17 @@ const Home: NextPage = () => {
         />
       </Head>
       <main className="h-screen w-screen bg-[url('/background.png')] bg-cover xl:bg-contain">
-        {Status === "idle" && <StartNewGameMenu />}
+        {Status === "idle" && (
+          <>
+            <a
+              className="z-50 absolute lg:w-[30%] bottom-5 text-center text-sm text-white opacity-50 hover:opacity-100 lg:bottom-5 lg:right-5 w-screen hover:underline"
+              href="https://github.com/2kuba1/Timberman-School-Open-Days"
+            >
+              by Jakub Wojtyna & Paweł Cyrzyk
+            </a>
+            <StartNewGameMenu />
+          </>
+        )}
         {Status === "playing" && <Game />}
         {Status === "gameOver" && <GameOverMenu />}
       </main>
