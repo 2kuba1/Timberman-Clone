@@ -42,9 +42,10 @@ const StartNewGameMenu = () => {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const currentDate = new Date();
     const cookieExpiresDate = new Date();
-    cookieExpiresDate.setTime(cookieExpiresDate.getTime() + 5 * 60 * 1000);
-
+    cookieExpiresDate.setDate(currentDate.getDate() + 365);
+    
     e.preventDefault();
     if (!cookies.id) {
       const id = await addUser.mutateAsync(usernameRef.current!.value);
