@@ -45,7 +45,7 @@ const StartNewGameMenu = () => {
     if (cookies.id) {
       setTimeout(() => {
         window.location.reload();
-      }, 1 * 60 * 1005);
+      }, 5 * 60 * 1005);
     }
   }, [cookies]);
 
