@@ -159,15 +159,15 @@ const StartNewGameMenu = () => {
               {getTop3.data?.map((player, index) => (
                 <div className="flex items-center gap-2" key={index}>
                   {index === 1 ? (
-                    <span className="text-menu-silver">
+                    <span className="text-menu-silver text-2xl">
                       <BiMedal />
                     </span>
                   ) : index === 2 ? (
-                    <span className="text-menu-copper">
+                    <span className="text-menu-copper text-2xl">
                       <BiMedal />
                     </span>
                   ) : (
-                    <span className="text-menu-gold">
+                    <span className="text-menu-gold text-2xl">
                       <BiMedal />
                     </span>
                   )}

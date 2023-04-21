@@ -8,17 +8,16 @@ import type { Player } from "~/types/player";
 import Image from 'next/image';
 import Link from 'next/link';
 import useDetectKeyPress from "~/hooks/useDetectKeyPress";
-import { useContext } from 'react';
-import { GameStatusContext } from "~/contexts/gameStatusContext";
+import { useRouter } from "next/router";
+
 
 const Leaderboard = () => {
   const { data: players} = api.scoreboard.getAllScores.useQuery(undefined, {
     refetchInterval: 3000,
   });
 
-  const { SetStatus } = useContext(GameStatusContext);
-
-  useDetectKeyPress("Escape", () => { SetStatus("idle") });
+  const router = useRouter();
+  useDetectKeyPress("Escape", () => { router.push('/') });
 
   return (
     <>
