@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -17,6 +18,16 @@ export const scoreboardRouter = createTRPCRouter({
   updateScore: publicProcedure
     .input(z.object({ id: z.string(), newScore: z.number() }))
     .mutation(async ({ ctx, input }) => {
+      if (input.newScore < 0)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Score can not be negative",
+        });
+      if (input.newScore > 3000)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Cheater",
+        });
       await ctx.prisma.scoreboard.update({
         data: {
           score: input.newScore,
