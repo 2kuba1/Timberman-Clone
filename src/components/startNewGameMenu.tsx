@@ -41,14 +41,6 @@ const StartNewGameMenu = () => {
     fetch().catch(console.error);
   }, []);
 
-  useEffect(() => {
-    if (cookies.id) {
-      setTimeout(() => {
-        window.location.reload();
-      }, 5 * 60 * 1005);
-    }
-  }, [cookies]);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const currentDate = new Date();
     const cookieExpiresDate = new Date();
