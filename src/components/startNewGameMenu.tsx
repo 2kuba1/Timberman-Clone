@@ -174,11 +174,7 @@ const StartNewGameMenu = () => {
                   )}
                   <span
                     className={`text-md w-full rounded-lg p-1 text-slate-200 underline ${
-                      index === 1
-                        ? "decoration-menu-silver"
-                        : index === 2
-                        ? "decoration-menu-copper"
-                        : "decoration-menu-gold"
+                     setColor(index)
                     }`}
                   >
                     {player.username.length >= 9
@@ -202,3 +198,13 @@ const StartNewGameMenu = () => {
 };
 
 export default StartNewGameMenu;
+
+const setColor = (index: number) => {
+  if (index === 1) {
+    return "text-menu-silver";
+  } else if (index === 2) {
+    return "text-menu-copper";
+  } else {
+    return "text-menu-gold";
+  }
+}

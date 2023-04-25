@@ -32,15 +32,7 @@ const PlayerMovement: FC<Props> = ({
         >
           <Image
             priority={true}
-            src={`${
-              animationStage === 0
-                ? isShifting
-                  ? "/man1.png"
-                  : "/man4.png"
-                : animationStage === 1
-                ? "/man2.png"
-                : "/man3.png"
-            }`}
+            src={`${setAnimationStage(animationStage, isShifting)}`}
             alt="man"
             height="200"
             width="200"
@@ -50,21 +42,21 @@ const PlayerMovement: FC<Props> = ({
           />
         </div>
       )}
-      {Status === "gameOver" && (
-        <div
-          className={`relative bottom-4 flex h-full w-full items-end ${
-            playerPosition === 0
-              ? lastPosition
-              : playerPosition === 1
-              ? "justify-start"
-              : "justify-end"
-          }`}
-        >
-          <Image src="/rip.png" alt="rip" height="128" width="128" />
-        </div>
-      )}
     </>
   );
 };
 
 export default PlayerMovement;
+
+const setAnimationStage = (animationStage: number, isShifting: boolean) => {
+  if (animationStage === 0) {
+    if (isShifting) {
+      return "/man1.png";
+    }
+    return "/man4.png";
+  }
+  if (animationStage === 1) {
+    return "/man2.png";
+  }
+  return "/man3.png";
+};
