@@ -1,4 +1,3 @@
-// imports
 import { GiLog } from "react-icons/gi";
 import { api } from "~/utils/api";
 import Head from "next/head";
@@ -32,7 +31,7 @@ const Leaderboard = () => {
           rel="stylesheet"
         />
       </Head>
-      <div className='flex h-screen w-screen items-center gap-5 overflow-y-auto bg-[url("/background.png")] bg-cover p-5 text-xl font-bold lg:bg-contain lg:text-2xl'>
+      <main className='flex h-screen w-screen items-center gap-5 overflow-y-auto bg-[url("/background.png")] bg-cover p-5 text-xl font-bold lg:bg-contain lg:text-2xl'>
         <Link href="/">
           <Image
             className="fixed left-5 top-5"
@@ -84,7 +83,7 @@ const Leaderboard = () => {
             </div>
           )}
         </div>
-      </div>
+      </main>
     </>
   );
 };
